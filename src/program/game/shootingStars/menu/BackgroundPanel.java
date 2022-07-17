@@ -1,9 +1,6 @@
 package program.game.shootingStars.menu;
 
 import program.game.shootingStars.*;
-import program.game.shootingStars.entities.Asteroid;
-import program.game.shootingStars.entities.Coin;
-import program.game.shootingStars.entities.EnemyShip;
 import program.game.shootingStars.entities.PlayerShip;
 import program.game.shootingStars.ui.GPanel;
 import program.game.shootingStars.variables.changable.Changable;
@@ -22,10 +19,6 @@ import java.util.ArrayList;
 public class BackgroundPanel extends GPanel implements Runnable {
 
 	private static final long serialVersionUID = 1L;
-
-	private ArrayList<Asteroid> asteroids;
-	private ArrayList<EnemyShip> enemies;
-	private ArrayList<Coin> coins;
 	
 	private PlayerShip player;
 	
@@ -65,13 +58,10 @@ public class BackgroundPanel extends GPanel implements Runnable {
 		enemyImage = ImageLoader.enemySprite;
 		bulletImage = ImageLoader.bulletSprite;
 		coinImage = ImageLoader.coinSprite;
-		
-		asteroids = new ArrayList<Asteroid> (Changable.asteroidCount);
-		enemies = new ArrayList<EnemyShip> (Changable.enemyCount);
-		coins = new ArrayList<Coin> (Changable.coinAmount);
+
 		player = new PlayerShip (x, y, health, 10, rocketImage, fireSprites);
 		
-		generateEntity();
+//		generateEntity();
 
 
 		setFocusable(true);
@@ -182,24 +172,6 @@ public class BackgroundPanel extends GPanel implements Runnable {
 		
 		player.draw(g);
 
-//		for (int i = 0; i < player.getBullets().size(); i++) {
-//			player.getBullets().get(i).draw(g);
-//		}
-//
-		for (int i = 0; i < asteroids.size(); i++) {
-			asteroids.get(i).draw(g);
-		}
-		
-		for (int i = 0; i < coins.size(); i++) {
-			coins.get(i).draw(g);
-		}
-		
-		for (int i = 0; i < enemies.size(); i++) {
-			enemies.get(i).draw(g);
-		}
-		
-		
-		
 		g.setFont(new Font ("Arial", Font.ITALIC, 30));
 		g.setColor(Color.WHITE);
 		g.drawString("Score: " + score, 10, 25);
@@ -210,23 +182,23 @@ public class BackgroundPanel extends GPanel implements Runnable {
 	/*
 	 * 		Other
 	 */
-	private void generateEntity () {
-		for (int i = 0; i < Changable.asteroidCount - asteroids.size(); i++) {
-			asteroids.add(new Asteroid (50, 10, 50, asteroidImage));
-			
-		}
-		
-		for (int i = 0; i < Changable.coinAmount - coins.size(); i++) {
-			coins.add(new Coin (GameConstant.ANIMATION_SPEED, coinImage));
-			
-		}
-		
-		for (int i = 0; i < Changable.enemyCount - enemies.size(); i++) {
-			enemies.add(new EnemyShip (100, 6, 30, 15, enemyImage, bulletImage));
-			
-		}
-		
-	}
+//	private void generateEntity () {
+//		for (int i = 0; i < Changable.asteroidCount - asteroids.size(); i++) {
+//			asteroids.add(new Asteroid (50, 10, 50, asteroidImage));
+//
+//		}
+//
+//		for (int i = 0; i < Changable.coinAmount - coins.size(); i++) {
+//			coins.add(new Coin (GameConstant.ANIMATION_SPEED, coinImage));
+//
+//		}
+//
+//		for (int i = 0; i < Changable.enemyCount - enemies.size(); i++) {
+//			enemies.add(new EnemyShip (100, 6, 30, 15, enemyImage, bulletImage));
+//
+//		}
+//
+//	}
 
 	private void moveBackground () {
 		y_img += GameConstant.ANIMATION_SPEED;
