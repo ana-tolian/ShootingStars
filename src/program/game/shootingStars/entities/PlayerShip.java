@@ -1,15 +1,19 @@
 package program.game.shootingStars.entities;
 
+import program.game.shootingStars.ImageLoader;
 import program.game.shootingStars.entities.Entity;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 
 public class PlayerShip extends Entity {
 	
 	protected BufferedImage img;
+	protected BufferedImage bulletImg = ImageLoader.bulletSprite;
 	protected BufferedImage images [];
+	protected ArrayList<Bullet> bullets;
 	
 	protected int width;
 	protected int height;
@@ -27,6 +31,7 @@ public class PlayerShip extends Entity {
 		
 		width = img.getWidth();
 		height = img.getHeight();
+		bullets = new ArrayList<> ();
 		
 	}
 	
@@ -37,6 +42,7 @@ public class PlayerShip extends Entity {
 		
 		width = img.getWidth();
 		height = img.getHeight();
+		bullets = new ArrayList<Bullet> ();
 		
 	}
 
@@ -47,46 +53,68 @@ public class PlayerShip extends Entity {
 		if (left)  x -= SPEED;
 
 	}
+
+	public void move (int x, int y) {
+		if (x - this.x > 0)
+			x += SPEED;
+		else
+			x -= SPEED;
+
+		if (y - this.x > 0)
+			y += SPEED;
+		else
+			y -= SPEED;
+	}
+
+	public void moveBullet () {
+		for (int i = 0; i < bullets.size(); i++)
+			bullets.get(i).move();
+	}
 	
 	public void draw (Graphics g) {
 		g.drawImage(img, x, y, width, height, null);
-		
+
+		for (int i = 0; i < bullets.size(); i++) {
+			if (bullets.get(i).isBulletOnScreen()) {
+				bullets.get(i).draw(g);
+			} else
+				bullets.remove(i);
+		}
 	}
 	
 	public void drawFire (Graphics g) {
 		g.drawImage(images[(int) Math.abs(System.currentTimeMillis() % 14)], x, y + 31, 21, 28, null);
-		
 	}
 
+	public void shoot () {
+		bullets.add(new Bullet (100, this, bulletImg));
+	}
 
 	public int getWidth() {
 		return width;
 	}
 
-
 	public int getHeight() {
 		return height;
 	}
-	
-	
-	
+
+	public ArrayList<Bullet> getBullets () {
+		return bullets;
+	}
+
 	public void setDirectionUp (boolean flag) {
 		up = flag;
-		
 	}
 	
 	public void setDirectionDown (boolean flag) {
 		down = flag;
-		
 	}
 	
 	public void setDirectionRight (boolean flag) {
 		right = flag;
-		
 	}
 	public void setDirectionLeft (boolean flag) {
 		left = flag;
-		
 	}
 	
 	

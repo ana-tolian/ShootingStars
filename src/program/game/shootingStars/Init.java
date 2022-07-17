@@ -1,9 +1,6 @@
 package program.game.shootingStars;
 
-import program.game.shootingStars.menu.BackgroundPanel;
-import program.game.shootingStars.menu.InfoPanel;
-import program.game.shootingStars.menu.MainMenuPanel;
-import program.game.shootingStars.menu.Settings;
+import program.game.shootingStars.menu.*;
 import program.game.shootingStars.variables.constant.GameConstant;
 
 import javax.swing.JFrame;
@@ -17,6 +14,7 @@ public class Init {
 	public static MainMenuPanel main;
 	public static Settings settings;
 	public static InfoPanel info;
+	public static PausePanel pausePanel;
 	
 	protected static JFrame frame;
 	
@@ -36,6 +34,7 @@ public class Init {
 		main = new MainMenuPanel ();
 		settings = new Settings ();
 		info = new InfoPanel ();
+		pausePanel = new PausePanel();
 		
 		frame.add(info);
 		frame.add(settings);
@@ -46,38 +45,46 @@ public class Init {
 		
 	}
 	
-	public static void changeView (JPanel pane) {
-		frame.add(pane);
+	public static void changeView (JPanel changeTo, JPanel changeFrom) {
+		frame.add(changeTo);
+		changeFrom.setVisible(false);
+		changeTo.setVisible(true);
 		
 	}
 	
-	public static void setMainMenuPanel (JPanel pane) {
-		changeView(main);
-		pane.setVisible(false);
-		main.setVisible(true);
+	public static void setMainMenuPanel (JPanel changeFrom) {
+		changeView(main, changeFrom);
 		
-		if (pane == playMode) {
+		if (changeFrom == playMode || changeFrom == pausePanel) {
+			playMode.save();
 			playMode.stop();
 			playMode = null;
 		}
 		
 	}
 	
-	public static void setPlayPanel () {
-		playMode = new BackgroundPanel ();
+	public static void setPlayPanel (boolean resumeGame) {
+		if (!resumeGame) {
+			playMode = new BackgroundPanel();
+			changeView(playMode, main);
+
+		} else {
+			changeView(playMode, pausePanel);
+		}
 		playMode.changeDifficult();
-		changeView(playMode);
-		main.setVisible(false);
-		playMode.setVisible(true);
 		playMode.start();
 		playMode.setFocusable(true);
 		playMode.requestFocus();
 	}
+
+	public static void setPausePanel () {
+		changeView(pausePanel, playMode);
+		playMode.stop();
+	}
 	
 	public static void setSettingPanel () {
-		changeView(settings);
-		main.setVisible(false);
-		settings.setVisible(true);
+		changeView(settings, main);
+
 	}
 	
 	public static void setShopPanel () {
@@ -86,9 +93,7 @@ public class Init {
 	}
 	
 	public static void setInfoPanel () {
-		changeView(info);
-		main.setVisible(false);
-		info.setVisible(true);
+		changeView(info, main);
 		
 	}
          

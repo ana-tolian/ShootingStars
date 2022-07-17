@@ -14,6 +14,8 @@ public class Bullet {
 	protected int width;
 	protected int height;
 	protected int damage;
+
+	protected boolean directionDowm;
 	
 	protected BufferedImage img;
 
@@ -23,7 +25,7 @@ public class Bullet {
 		y = enemy.getY() + enemy.getHeight();
 		width = img.getWidth();
 		height = img.getHeight();
-		
+		directionDowm = true;
 	}
 
 	public Bullet (int damage, PlayerShip player, BufferedImage img) {
@@ -31,18 +33,22 @@ public class Bullet {
 		y = player.getY() + player.getHeight();
 		width = img.getWidth();
 		height = img.getHeight();
-		
+		directionDowm = false;
 	}
 	
 	
 	
-	public void draw (Graphics g) {
+	public boolean draw (Graphics g) {
 		g.drawImage(img, x, y, width, height, null);
+		System.out.println(x + " " + y + " " + width + " " + height);
+		return isBulletOnScreen();
 	}
 	
 	public void move () {
-		y += SPEED;
-		
+		if (directionDowm)
+			y += SPEED;
+		else
+			y -= SPEED;
 	}
 	
 	public boolean isCollided (PlayerShip player) {
@@ -64,7 +70,7 @@ public class Bullet {
 	
 	
 	public boolean isBulletOnScreen () {
-		if (y < GameConstant.F_HEIGHT + 50)
+		if (y < GameConstant.F_HEIGHT + 50 && y > -50)
 			return true;
 		else
 			return false;

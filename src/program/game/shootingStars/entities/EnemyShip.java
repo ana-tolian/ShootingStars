@@ -43,8 +43,8 @@ public class EnemyShip extends Asteroid {
 	}
 	
 	public void drawBullets (Graphics g) {
-		for (int i = 0; i < bullets.size(); i++)
-			bullets.get(i).draw(g);
+//		for (int i = 0; i < bullets.size(); i++)
+//			bullets.get(i).draw(g);
 		
 	}
 	

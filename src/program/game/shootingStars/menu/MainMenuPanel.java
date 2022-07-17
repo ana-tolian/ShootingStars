@@ -15,9 +15,7 @@ import javax.swing.JButton;
 
 
 public class MainMenuPanel extends GPanel {
-	
-	private static final long serialVersionUID = 1L;
-	
+
 	private GPanel panel;
 	private GPanel nullPanel;
 
@@ -58,7 +56,7 @@ public class MainMenuPanel extends GPanel {
 			JButton button = (JButton) e.getSource();
 	
 			if (button.getActionCommand().equals("Play")) {
-				Init.setPlayPanel();
+				Init.setPlayPanel(false);
 			
 			} else if (button.getActionCommand().equals("Settings")) {
 				Init.setSettingPanel();

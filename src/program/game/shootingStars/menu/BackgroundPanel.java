@@ -13,8 +13,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class BackgroundPanel extends GPanel implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 
-	private ArrayList<Asteroid> entities;
+	private ArrayList<Asteroid> asteroids;
 	private ArrayList<EnemyShip> enemies;
 	private ArrayList<Coin> coins;
 	
@@ -67,7 +66,7 @@ public class BackgroundPanel extends GPanel implements Runnable {
 		bulletImage = ImageLoader.bulletSprite;
 		coinImage = ImageLoader.coinSprite;
 		
-		entities = new ArrayList<Asteroid> (Changable.asteroidCount);
+		asteroids = new ArrayList<Asteroid> (Changable.asteroidCount);
 		enemies = new ArrayList<EnemyShip> (Changable.enemyCount);
 		coins = new ArrayList<Coin> (Changable.coinAmount);
 		player = new PlayerShip (x, y, health, 10, rocketImage, fireSprites);
@@ -78,9 +77,9 @@ public class BackgroundPanel extends GPanel implements Runnable {
 		setFocusable(true);
 		requestFocus();
 		
-		addKeyListener (new KeyL ());
-		
-		
+		addKeyListener (new Listener ());
+		addMouseMotionListener(new Listener());
+		addMouseListener(new Listener());
 	}
 	
 	public void start () {
@@ -92,7 +91,6 @@ public class BackgroundPanel extends GPanel implements Runnable {
 	
 	public void stop () {
 		isGameOn = false;
-		
 	}
 	
 	
@@ -100,65 +98,65 @@ public class BackgroundPanel extends GPanel implements Runnable {
 		while (isGameOn) {
 			try {
 				
-				for (int i = 0; i < entities.size(); i++) {
-					entities.get(i).move();
-					
-					if (!entities.get(i).isEntityOnScreen()) {
-						entities.remove(i);
-						generateEntity();
-					}
-					
-					if (entities.get(i).isCollided(player)) {
-						systemStop();
-						Init.setMainMenuPanel(this);
-						return;
-						
-					}
-					
-				}
-				
-				for (int i = 0; i < coins.size(); i++) {
-					coins.get(i).move();
-					
-					if (!coins.get(i).isEntityOnScreen()) {
-						coins.remove(i);
-						generateEntity();
-					}
-					
-					if (coins.get(i).isCollided(player)) {
-						coins.remove(i);
-						score++;	
-					}
-					
-				}
-				
-				for (int i = 0; i < enemies.size(); i++) {
-					enemies.get(i).move();
-					
-					if (!enemies.get(i).isEntityOnScreen()) {
-						enemies.remove(i);
-						generateEntity();
-					}
-					
-					if (entities.get(i).isCollided(player)) {
-						systemStop();
-						Init.setMainMenuPanel(this);
-						return;
-						
-					}
-					
-					if (enemies.get(i).isEnemyInFrontOfPlayer(player)) {
-						enemies.get(i).shoot();
-
-					}
-					
-					enemies.get(i).moveBullet();
-					
-					if (enemies.get(i).isHitted(player) > 0)
-						System.out.println(enemies.get(i).isHitted(player));
-						
-				}
-				
+//				for (int i = 0; i < asteroids.size(); i++) {
+//					asteroids.get(i).move();
+//
+//					if (!asteroids.get(i).isEntityOnScreen()) {
+//						asteroids.remove(i);
+//						generateEntity();
+//					}
+//
+//					if (asteroids.get(i).isCollided(player)) {
+//						systemStop();
+//						return;
+//
+//					}
+//
+//				}
+//
+//				for (int i = 0; i < coins.size(); i++) {
+//					coins.get(i).move();
+//
+//					if (!coins.get(i).isEntityOnScreen()) {
+//						coins.remove(i);
+//						generateEntity();
+//					}
+//
+//					if (coins.get(i).isCollided(player)) {
+//						coins.remove(i);
+//						score++;
+//					}
+//
+//				}
+//
+//				for (int i = 0; i < enemies.size(); i++) {
+//					enemies.get(i).move();
+//
+//					if (!enemies.get(i).isEntityOnScreen()) {
+//						enemies.remove(i);
+//						generateEntity();
+//					}
+//
+//					if (asteroids.get(i).isCollided(player)) {
+//						systemStop();
+//						return;
+//
+//					}
+//
+//					if (enemies.get(i).isEnemyInFrontOfPlayer(player)) {
+//						enemies.get(i).shoot();
+//
+//					}
+//
+//					enemies.get(i).moveBullet();
+//
+//					if (enemies.get(i).isHitted(player) > 0)
+//						System.out.println(enemies.get(i).isHitted(player));
+//
+//				}
+				moveBackground();
+				player.moveBullet();
+//
 				repaint();
 				Thread.sleep((int) 50 / Changable.gameSpeed);
 						
@@ -179,20 +177,17 @@ public class BackgroundPanel extends GPanel implements Runnable {
 		g.drawImage(backgroundImage, 0, y_img - GameConstant.F_HEIGHT, GameConstant.F_WIDTH, GameConstant.F_HEIGHT, null);
 		g.drawImage(backgroundImage, 0, y_img, GameConstant.F_WIDTH, GameConstant.F_HEIGHT, null);
 		
-		y_img += GameConstant.ANIMATION_SPEED;
-		length += GameConstant.ANIMATION_SPEED * Changable.gameSpeed / 3;
-		
-		
-		if (y_img >= GameConstant.F_HEIGHT)
-			y_img = 0;
-		
 		if (player.isMove()) 
 			player.drawFire(g);
 		
 		player.draw(g);
-		
-		for (int i = 0; i < entities.size(); i++) {
-			entities.get(i).draw(g);
+
+//		for (int i = 0; i < player.getBullets().size(); i++) {
+//			player.getBullets().get(i).draw(g);
+//		}
+//
+		for (int i = 0; i < asteroids.size(); i++) {
+			asteroids.get(i).draw(g);
 		}
 		
 		for (int i = 0; i < coins.size(); i++) {
@@ -201,7 +196,6 @@ public class BackgroundPanel extends GPanel implements Runnable {
 		
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).draw(g);
-			enemies.get(i).drawBullets(g);
 		}
 		
 		
@@ -217,8 +211,8 @@ public class BackgroundPanel extends GPanel implements Runnable {
 	 * 		Other
 	 */
 	private void generateEntity () {
-		for (int i = 0; i < Changable.asteroidCount - entities.size(); i++) {
-			entities.add(new Asteroid (50, 10, 50, asteroidImage));
+		for (int i = 0; i < Changable.asteroidCount - asteroids.size(); i++) {
+			asteroids.add(new Asteroid (50, 10, 50, asteroidImage));
 			
 		}
 		
@@ -233,11 +227,23 @@ public class BackgroundPanel extends GPanel implements Runnable {
 		}
 		
 	}
+
+	private void moveBackground () {
+		y_img += GameConstant.ANIMATION_SPEED;
+		length += GameConstant.ANIMATION_SPEED * Changable.gameSpeed / 3;
+		if (y_img >= GameConstant.F_HEIGHT)
+			y_img = 0;
+	}
 	
 	private void systemStop () throws InterruptedException {
 		for (int i = 0; i < 3; i++)
-			Thread.sleep(1000);
+			Thread.sleep(700);
+		Init.setMainMenuPanel(this);
 
+	}
+
+	public void save () {
+		new SaveResults(score, length);
 	}
 	
 	public void changeDifficult () {
@@ -250,10 +256,13 @@ public class BackgroundPanel extends GPanel implements Runnable {
 	/*
 	 *   	Key Listener
 	 */
-	private class KeyL implements KeyListener {
+	private class Listener implements KeyListener, MouseMotionListener, MouseListener {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+				Init.setPausePanel();
+
 			if (e.getKeyCode() == KeyEvent.VK_W) 
 				player.setDirectionUp(true);
 
@@ -265,6 +274,11 @@ public class BackgroundPanel extends GPanel implements Runnable {
 			
 			if (e.getKeyCode() == KeyEvent.VK_A) 
 				player.setDirectionLeft(true);
+
+			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+				System.out.println("==================shot");
+				player.shoot();
+			}
 				
 			player.move();
 			
@@ -288,7 +302,36 @@ public class BackgroundPanel extends GPanel implements Runnable {
 
 		@Override
 		public void keyTyped(KeyEvent e) {}
-		
+
+		@Override
+		public void mouseClicked(MouseEvent e) { }
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			System.out.println("==================shot");
+			player.shoot();
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) { }
+
+		@Override
+		public void mouseEntered(MouseEvent e) { }
+
+		@Override
+		public void mouseExited(MouseEvent e) { }
+
+		@Override
+		public void mouseDragged(MouseEvent e) { }
+
+		@Override
+		public void mouseMoved(MouseEvent e) {
+			int x = e.getX();
+			int y = e.getY();
+
+			player.move(x, y);
+			repaint();
+		}
 	}
 	
 
