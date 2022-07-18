@@ -1,9 +1,11 @@
 package program.game.shootingStars.menu;
 
 import program.game.shootingStars.*;
-import program.game.shootingStars.entities.Asteroid;
-import program.game.shootingStars.entities.AsteroidSet;
+import program.game.shootingStars.entities.EnemyShip;
+import program.game.shootingStars.entities.set.AsteroidSet;
 import program.game.shootingStars.entities.PlayerShip;
+import program.game.shootingStars.entities.set.CoinSet;
+import program.game.shootingStars.entities.set.EnemyShipSet;
 import program.game.shootingStars.ui.GPanel;
 import program.game.shootingStars.variables.changable.Changable;
 import program.game.shootingStars.variables.constant.GameConstant;
@@ -12,13 +14,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
-import java.util.ArrayList;
-
 
 public class BackgroundPanel extends GPanel implements Runnable {
 	
 	private PlayerShip player;
 	private AsteroidSet asteroids;
+	private CoinSet coins;
+	private EnemyShipSet enemies;
 	
 	private BufferedImage backgroundImage;
 	private BufferedImage rocketImage;
@@ -31,7 +33,7 @@ public class BackgroundPanel extends GPanel implements Runnable {
 	private int y_img;
 	private int score = 0;
 	private int length = 0;
-	private int state = 0;
+	private boolean state = false;
 
 	private int px;
 	private int py;
@@ -69,6 +71,8 @@ public class BackgroundPanel extends GPanel implements Runnable {
 
 		player = new PlayerShip (10, px, py, health, rocketImage, bulletImage, fireSprites);
 		asteroids = new AsteroidSet(asteroidImage);
+		coins = new CoinSet(coinImage);
+		enemies = new EnemyShipSet(enemyImage, bulletImage);
 
 		setFocusable(true);
 		requestFocus();
@@ -95,14 +99,16 @@ public class BackgroundPanel extends GPanel implements Runnable {
 				moveBackground();
 				player.move(px, py);
 				player.moveBullet();
-
-				state = asteroids.move(player);
+				coins.move(player);
+				asteroids.move(player);
+				enemies.move(player);
 
 				repaint();
-				Thread.sleep((int) 50 / Changable.gameSpeed);
 
+				checkIfPlayerCollectedCoin();
 				checkIfPlayerDestroyed();
 
+				Thread.sleep((int) 50 / Changable.gameSpeed);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 			}
@@ -125,6 +131,8 @@ public class BackgroundPanel extends GPanel implements Runnable {
 		
 		player.draw(g);
 		asteroids.draw(g);
+		coins.draw(g);
+		enemies.draw(g);
 
 		g.setFont(GameConstant.SYSTEM_FONT);
 		g.setColor(Color.WHITE);
@@ -135,23 +143,6 @@ public class BackgroundPanel extends GPanel implements Runnable {
 	/*
 	 * 		Other
 	 */
-//	private void generateEntity () {
-//		for (int i = 0; i < Changable.asteroidCount - asteroids.size(); i++) {
-//			asteroids.add(new Asteroid (10, 50, asteroidImage));
-//		}
-//
-//		for (int i = 0; i < Changable.coinAmount - coins.size(); i++) {
-//			coins.add(new Coin (GameConstant.ANIMATION_SPEED, coinImage));
-//
-//		}
-//
-//		for (int i = 0; i < Changable.enemyCount - enemies.size(); i++) {
-//			enemies.add(new EnemyShip (100, 6, 30, 15, enemyImage, bulletImage));
-//
-//		}
-//
-//	}
-
 	private void moveBackground () {
 		y_img += GameConstant.ANIMATION_SPEED;
 		length += GameConstant.ANIMATION_SPEED * Changable.gameSpeed / 3;
@@ -159,9 +150,18 @@ public class BackgroundPanel extends GPanel implements Runnable {
 			y_img = 0;
 	}
 
+	private void incrementScore() {
+		score++;
+	}
+
+	private void checkIfPlayerCollectedCoin () {
+		if (player.isCollectedCoin())
+			incrementScore();
+	}
+
 	private void checkIfPlayerDestroyed () {
 		try {
-			if (state == 1)
+			if (player.isCrushed())
 				systemStop();
 		} catch (InterruptedException e) {
 			e.printStackTrace();

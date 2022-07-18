@@ -1,17 +1,20 @@
-package program.game.shootingStars.entities;
+package program.game.shootingStars.entities.set;
 
+import program.game.shootingStars.entities.PlayerShip;
+import program.game.shootingStars.entities.StaticEntity;
 import program.game.shootingStars.variables.changable.Changable;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class AsteroidSet {
+
+public class EntitySet<T extends StaticEntity> implements Set {
 
     private BufferedImage asteroidImage;
-    private ArrayList<Asteroid> asteroids;
+    private ArrayList<T> asteroids;
 
-    public AsteroidSet (BufferedImage bi) {
+    public EntitySet (BufferedImage bi) {
         this.asteroidImage = bi;
         this.asteroids = new ArrayList<>(Changable.asteroidCount);
         generateEntity();
@@ -23,25 +26,24 @@ public class AsteroidSet {
         }
     }
 
-    public int move (PlayerShip p) {
+    public void move (PlayerShip p) {
         for (int i = 0; i < asteroids.size(); i++) {
-            Asteroid a = asteroids.get(i);
+            T a = asteroids.get(i);
             a.move();
 
             if (!a.isEntityOnScreen())
                 asteroids.remove(i);
 
             if (a.isIntersects(p)) {
-                return 1;
+
             }
         }
         generateEntity();
-        return 0;
     }
 
     public void generateEntity () {
         for (int i = 0; i < Changable.asteroidCount - asteroids.size(); i++) {
-            asteroids.add(new Asteroid (10, 50, asteroidImage));
+//            asteroids.add(new T (10, 50, asteroidImage));
         }
     }
 }

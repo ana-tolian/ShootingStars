@@ -14,6 +14,8 @@ public class PlayerShip extends StaticEntity {
 	protected ArrayList<Bullet> bullets;
 
 	private boolean isMove;
+	private boolean isCollectedCoin;
+	private boolean isCrushed;
 
 	public PlayerShip(int speed, int x, int y, int health,
 					  BufferedImage img, BufferedImage bulletImg, BufferedImage[] images) {
@@ -64,6 +66,25 @@ public class PlayerShip extends StaticEntity {
 
 	public int getHeight() {
 		return height;
+	}
+
+	public void setCrushed (boolean c) {
+		isCrushed = c;
+	}
+
+	public void setCollectedCoin(boolean collectedCoin) {
+		isCollectedCoin = collectedCoin;
+	}
+
+	public boolean isCrushed () {
+		return isCrushed;
+	}
+
+	public boolean isCollectedCoin() {
+		boolean state = isCollectedCoin;
+		if (isCollectedCoin)
+			isCollectedCoin = !isCollectedCoin;
+		return state;
 	}
 
 	public boolean isMove () {

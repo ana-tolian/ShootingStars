@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class StaticEntity implements Entity {
 	
-	public int SPEED = 10;
+	public int speed = 10;
 	
 	protected int x;
 	protected int y;
@@ -17,23 +17,34 @@ public class StaticEntity implements Entity {
 	protected int health;
 	protected BufferedImage img;
 
-	public StaticEntity(int speed, int health, BufferedImage img) {
-		this.SPEED = speed;
-		this.health = health;
-		this.width = img.getWidth();
-		this.height = img.getHeight();
+	public StaticEntity(int speed, BufferedImage img) {
+		this.speed = speed;
+		this.health = 0;
 		this.img = img;
 		generateStartPosition();
+		init();
+	}
+
+	public StaticEntity(int speed, int health, BufferedImage img) {
+		this.speed = speed;
+		this.health = health;
+		this.img = img;
+		generateStartPosition();
+		init();
 	}
 
 	public StaticEntity(int speed, int x, int y, int health, BufferedImage img) {
-		this.SPEED = speed;
+		this.speed = speed;
 		this.health = health;
 		this.x = x;
 		this.y = y;
+		this.img = img;
+		init();
+	}
+
+	private void init () {
 		this.width = img.getWidth();
 		this.height = img.getHeight();
-		this.img = img;
 	}
 
 	@Override
@@ -42,9 +53,36 @@ public class StaticEntity implements Entity {
 	}
 
 	@Override
+	public void move () {
+		y += speed;
+	}
+
+	@Override
 	public void generateStartPosition () {
 		x = (int) (Math.random() * GameConstant.F_WIDTH);
 		y = (int) (Math.random() * (2 * -GameConstant.F_HEIGHT + (GameConstant.F_HEIGHT - 30)) - GameConstant.F_HEIGHT);
+	}
+
+
+	// This method check whether the every point
+	// of each rectangle is inside the another rect
+	@Override
+	public boolean isIntersects (StaticEntity p) {
+		return isPointInsideBox(this.x, this.y, p) ||                                         // x1, y1
+				isPointInsideBox(this.x + this.width, this.y, p) ||                         // x2, y1
+				isPointInsideBox(this.x, this.y + this.height, p) ||                        // x1, y2
+				isPointInsideBox(this.x + this.width, this.y + this.height, p) ||         // x2, y2
+				isPointInsideBox(p.x, p.y, this) ||                                         // px1, py1
+				isPointInsideBox(p.x + p.width, p.y, this) ||                             // px2, py1
+				isPointInsideBox(p.x, p.y + p.height, this) ||                            // px1, py2
+				isPointInsideBox(p.x + p.width, p.y + p.height, this);                  // px2, py2
+	}
+
+	private boolean isPointInsideBox (int x, int y, StaticEntity e) {
+		return (e.x <= x &&
+				e.y <= y &&
+				x <= e.x + e.width &&
+				y < e.y + e.height);
 	}
 
 	@Override
@@ -72,7 +110,7 @@ public class StaticEntity implements Entity {
 	@Override
 	public String toString() {
 		return "StaticEntity{" +
-				"SPEED=" + SPEED +
+				"SPEED=" + speed +
 				", x=" + x +
 				", y=" + y +
 				", width=" + width +
