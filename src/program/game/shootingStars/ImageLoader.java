@@ -15,6 +15,7 @@ public class ImageLoader {
 	public static BufferedImage enemySprite;
 	public static BufferedImage coinSprite;
 	public static BufferedImage bulletSprite;
+	public static BufferedImage cursorImage;
 	
 	public static BufferedImage fireAnimationSprites [];
 	
@@ -33,7 +34,9 @@ public class ImageLoader {
 			coinSprite = ImageIO.read(new File (PathConstant.FILE_PATH_COIN_SPRITE));
 			enemySprite = ImageIO.read(new File (PathConstant.FILE_PATH_ENEMY_SPRITE));
 			bulletSprite = ImageIO.read(new File (PathConstant.FILE_PATH_BULLET_SPRITE));
-			
+			cursorImage = ImageIO.read(new File (PathConstant.FILE_PATH_CURSOR));
+//			Image curImage = Toolkit.getDefaultToolkit().createImage(getClass().getResource("/images/cursor.png"));
+
 			for (int i = 0; i <  fireAnimationSprites.length; i++) {
 				 fireAnimationSprites[i] = ImageIO.read(new File (PathConstant.FILE_PATH_FIRE_SPRITE + "fire" + i + ".png"));
 			}
