@@ -15,6 +15,7 @@ public class Init {
 	public static Settings settings;
 	public static InfoPanel info;
 	public static PausePanel pausePanel;
+	public static ShopPanel shopPanel;
 	
 	protected static JFrame frame;
 	
@@ -25,7 +26,7 @@ public class Init {
 	
 	
 	private void createUI () {
-		frame = new JFrame ("Shooting stars");
+		frame = new JFrame ("Shooting Star");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(GameConstant.F_WIDTH, GameConstant.F_HEIGHT);
 		frame.setResizable(false);
@@ -35,6 +36,9 @@ public class Init {
 		settings = new Settings ();
 		info = new InfoPanel ();
 		pausePanel = new PausePanel();
+		shopPanel = new ShopPanel();
+
+		new ImageLoader();
 		
 		frame.add(info);
 		frame.add(settings);
@@ -88,8 +92,8 @@ public class Init {
 	}
 	
 	public static void setShopPanel () {
-		
-		
+		changeView(shopPanel, main);
+		shopPanel.refreshBalanceLabel();
 	}
 	
 	public static void setInfoPanel () {

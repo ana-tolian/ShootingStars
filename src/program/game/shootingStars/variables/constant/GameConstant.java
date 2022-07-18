@@ -24,5 +24,6 @@ public class GameConstant {
 
     public static final int ANIMATION_SPEED = 2;
 
-    public static final Font SYSTEM_FONT = new Font ("Arial", Font.BOLD, 24);
+    public static final Font SYSTEM_FONT = new Font ("Yu Gothic UI", Font.BOLD, 24);
+    public static final Font LOGO_FONT = new Font ("Eras Light ITC", Font.ITALIC, 56);//Eras Light ITC //Bahnschrift SemiBold
 }

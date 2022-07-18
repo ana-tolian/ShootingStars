@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class ImageLoader {
 	
@@ -16,6 +17,8 @@ public class ImageLoader {
 	public static BufferedImage coinSprite;
 	public static BufferedImage bulletSprite;
 	public static BufferedImage cursorImage;
+
+	private ImageIcon coinIcon;
 	
 	public static BufferedImage fireAnimationSprites [];
 	
@@ -43,6 +46,12 @@ public class ImageLoader {
 			
 		} catch (Exception e) {}
 		
+	}
+
+	public ImageIcon getCoinIcon () {
+		coinIcon = new ImageIcon(PathConstant.FILE_PATH_COIN_SPRITE);
+		coinIcon.getImage().flush();
+		return coinIcon;
 	}
 
 }

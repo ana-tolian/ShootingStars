@@ -61,7 +61,7 @@ public class Settings extends GPanel {
 			
 			
 		settingsLabel = new GLabel ("- Settings -");
-			settingsLabel.setPreferredSize(new Dimension (765, 100));
+			settingsLabel.setPreferredSize(new Dimension (785, 100));
 			settingsLabel.setBorder(BorderFactory.createLineBorder(GameConstant.LINE_COLOR, GameConstant.LINE_THICKNESS));
 
 			

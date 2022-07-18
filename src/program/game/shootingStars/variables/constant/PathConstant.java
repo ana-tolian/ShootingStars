@@ -11,4 +11,5 @@ public class PathConstant {
     public static final String FILE_PATH_BULLET_SPRITE = "res/enemyBullet0.png";
     public static final String FILE_PATH_SAVED_RESULTS = "res/results.txt";
     public static final String FILE_PATH_CURSOR = "res/aimCursor.png";
+    public static final String FILE_PATH_MONEY = "res/money.txt";
 }

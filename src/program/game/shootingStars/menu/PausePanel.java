@@ -2,6 +2,7 @@ package program.game.shootingStars.menu;
 
 import program.game.shootingStars.Init;
 import program.game.shootingStars.ui.GButton;
+import program.game.shootingStars.ui.GLabel;
 import program.game.shootingStars.ui.GPanel;
 import program.game.shootingStars.variables.constant.GameConstant;
 
@@ -14,7 +15,9 @@ import java.awt.event.ActionListener;
 public class PausePanel extends GPanel {
 
     private GPanel panel;
-    private GPanel nullPanel;
+    private GPanel logoPanel;
+
+    private GLabel logoLabel;
 
     private GButton[] buttons = {new GButton ("Resume"), new GButton ("Back to menu"), new GButton ("Exit")};
 
@@ -22,16 +25,19 @@ public class PausePanel extends GPanel {
     public PausePanel () {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        nullPanel = new GPanel ();
-        nullPanel.setPreferredSize(new Dimension(50, 50));
-        nullPanel.setMaximumSize(new Dimension (50, 50));
-        nullPanel.setMinimumSize(new Dimension (50, 50));
+        logoLabel = new GLabel("/ Shooting Star /");
+        logoLabel.setFont(GameConstant.LOGO_FONT);
+        logoLabel.setPreferredSize(new Dimension (400, 110));
+        logoLabel.setBorder(BorderFactory.createEmptyBorder(90, 0, 100, 0));
+
+        logoPanel = new GPanel ();
+        logoPanel.add(logoLabel);
 
         panel = new GPanel ();
         panel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panel.setPreferredSize(new Dimension (200, GameConstant.F_HEIGHT));
-        panel.setMaximumSize(new Dimension (200, GameConstant.F_HEIGHT ));
-        panel.setMinimumSize(new Dimension (200, GameConstant.F_HEIGHT ));
+        panel.setPreferredSize(new Dimension (400, GameConstant.F_HEIGHT));
+        panel.setMaximumSize(new Dimension (400, GameConstant.F_HEIGHT ));
+        panel.setMinimumSize(new Dimension (400, GameConstant.F_HEIGHT ));
 
 
         for (int i = 0; i < buttons.length; i++) {
@@ -39,7 +45,7 @@ public class PausePanel extends GPanel {
             panel.add(buttons[i]);
         }
 
-        add("North", nullPanel);
+        add("North", logoPanel);
         add("Center", panel);
 
     }

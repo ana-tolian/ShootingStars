@@ -2,6 +2,7 @@ package program.game.shootingStars.menu;
 
 import program.game.shootingStars.Init;
 import program.game.shootingStars.ui.GButton;
+import program.game.shootingStars.ui.GLabel;
 import program.game.shootingStars.ui.GPanel;
 import program.game.shootingStars.variables.constant.GameConstant;
 
@@ -10,14 +11,15 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
+import javax.swing.*;
 
 
 public class MainMenuPanel extends GPanel {
 
 	private GPanel panel;
-	private GPanel nullPanel;
+	private GPanel logoPanel;
+
+	private GLabel logoLabel;
 
 	private GButton [] buttons = {new GButton ("Play"), new GButton("Shop"),
 									new GButton ("Settings"), new GButton ("Info"), new GButton ("Exit")};
@@ -25,17 +27,21 @@ public class MainMenuPanel extends GPanel {
 
 	public MainMenuPanel () {
 		setLayout(new BoxLayout (this, BoxLayout.Y_AXIS));
-		
-		nullPanel = new GPanel ();
-		  nullPanel.setPreferredSize(new Dimension (50, 50));
-		  nullPanel.setMaximumSize(new Dimension (50, 50));
-		  nullPanel.setMinimumSize(new Dimension (50, 50));
+
+		logoLabel = new GLabel("/ Shooting Star /");
+			logoLabel.setFont(GameConstant.LOGO_FONT);
+			logoLabel.setPreferredSize(new Dimension (400, 110));
+			logoLabel.setBorder(BorderFactory.createEmptyBorder(90, 0, 100, 0));
+
+		logoPanel = new GPanel ();
+		logoPanel.add(logoLabel);
 		
 		panel = new GPanel ();
 			panel.setLayout(new FlowLayout(FlowLayout.CENTER));
-			panel.setPreferredSize(new Dimension (200, GameConstant.F_HEIGHT));
-			panel.setMaximumSize(new Dimension (200, GameConstant.F_HEIGHT ));
-			panel.setMinimumSize(new Dimension (200, GameConstant.F_HEIGHT ));
+			panel.setPreferredSize(new Dimension (400, GameConstant.F_HEIGHT));
+			panel.setMaximumSize(new Dimension (400, GameConstant.F_HEIGHT ));
+			panel.setMinimumSize(new Dimension (400, GameConstant.F_HEIGHT ));
+			panel.add(logoLabel);
 		
 		
 		for (int i = 0; i < buttons.length; i++) {
@@ -43,7 +49,7 @@ public class MainMenuPanel extends GPanel {
 			panel.add(buttons[i]);
 		}
 		
-		add("North", nullPanel);
+		add("North", logoPanel);
 		add("Center", panel);
 
 	}

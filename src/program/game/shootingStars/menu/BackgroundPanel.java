@@ -38,7 +38,6 @@ public class BackgroundPanel extends GPanel implements Runnable {
 		setPreferredSize(new Dimension (GameConstant.F_WIDTH, GameConstant.F_HEIGHT));
 		y_img = 0;
 
-		new ImageLoader();
 		backgroundImage = ImageLoader.spaceBackground;
 
 		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(ImageLoader.cursorImage, new Point(15,15), "CustomCursor"));
@@ -133,17 +132,15 @@ public class BackgroundPanel extends GPanel implements Runnable {
 		for (int i = 0; i < 3; i++)
 			Thread.sleep(700);
 		Init.setMainMenuPanel(this);
-
 	}
 
 	public void save () {
-		new SaveResults(score, length);
+		new SaveResults(score, length).save();
 	}
 	
 	public void changeDifficult () {
 		Changable.asteroidCount = 5 * Changable.gameDifficult;
 		Changable.enemyCount = 3 * Changable.gameDifficult;
-		
 	}
 	
 	
