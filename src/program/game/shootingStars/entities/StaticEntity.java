@@ -33,6 +33,15 @@ public class StaticEntity implements Entity {
 		init();
 	}
 
+	public StaticEntity(int speed, int x, int y, BufferedImage img) {
+		this.speed = speed;
+		this.health = 0;
+		this.x = x;
+		this.y = y;
+		this.img = img;
+		init();
+	}
+
 	public StaticEntity(int speed, int x, int y, int health, BufferedImage img) {
 		this.speed = speed;
 		this.health = health;

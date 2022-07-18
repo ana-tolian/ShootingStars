@@ -4,6 +4,7 @@ import program.game.shootingStars.Init;
 import program.game.shootingStars.ui.GButton;
 import program.game.shootingStars.ui.GLabel;
 import program.game.shootingStars.ui.GPanel;
+import program.game.shootingStars.variables.constant.GameConstant;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -43,7 +44,8 @@ public class InfoPanel extends GPanel {
 			creditPanel.setPreferredSize(new Dimension (900, 400));
 			
 		creditLabel = new GLabel("Created and developed by ana-tolian");
-			creditLabel.setPreferredSize(new Dimension (420, 80));
+			creditLabel.setPreferredSize(new Dimension (550, 130));
+			creditLabel.setBorder(BorderFactory.createLineBorder(GameConstant.LINE_COLOR, GameConstant.LINE_THICKNESS));
 
 		backButton = new GButton("Back");
 			backButton.addActionListener(new Listener());

@@ -8,11 +8,12 @@ public class Bullet extends StaticEntity {
 
     private boolean directionUp;
 
-    public Bullet(int speed, int x, int y, int health, boolean dir, BufferedImage img) {
-        super(speed, x, y, health, img);
+    public Bullet(int speed, int x, int y, boolean dir, BufferedImage img) {
+        super(speed, x, y, img);
         this.directionUp = dir;
     }
 
+    @Override
     public void move () {
         if (directionUp)
             y -= 4;

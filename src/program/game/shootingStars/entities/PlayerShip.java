@@ -57,7 +57,7 @@ public class PlayerShip extends StaticEntity {
 	}
 
 	public void shoot () {
-		bullets.add(new Bullet (100, this.x + (width >> 1) - 1, this.y, 0, true, bulletImg));
+		bullets.add(new Bullet (100, this.x + (width >> 1) - 1, this.y, true, bulletImg));
 	}
 
 	public int getWidth() {

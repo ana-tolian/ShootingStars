@@ -8,6 +8,8 @@ public class GameConstant {
     public static final Color BUTTON_COLOR = new Color (0, 141, 255);
     public static final Color FONT_COLOR = new Color (90, 238, 255);
     public static final Color LINE_COLOR = new Color (0, 98, 229);
+    public static final Color BUTTON_COLOR_MOUSE_ENTERED = new Color (165, 215, 255);
+    public static final Color FONT_COLOR_MOUSE_ENTERED = new Color (37, 130, 175);
 
     public static final int F_WIDTH = 800;
     public static final int F_HEIGHT = 640;
