@@ -18,24 +18,16 @@ import java.awt.image.BufferedImage;
 
 
 public class BackgroundPanel extends GPanel implements Runnable {
-	
-	private PlayerShip player;
-	private EntitySet entitySet;
 
+	private EntitySet entitySet;
 	private BufferedImage backgroundImage;
-	private BufferedImage fireSprites [];
-	private BufferedImage rocketImage;
-	private BufferedImage bulletImage;
 
 	private int y_img;
 	private int score = 0;
 	private int length = 0;
-	private boolean state = false;
 
 	private int px;
 	private int py;
-	
-	public static int health;
 	
 	private static boolean isGameOn = false;
 	
@@ -44,16 +36,13 @@ public class BackgroundPanel extends GPanel implements Runnable {
 	
 	public BackgroundPanel () {
 		setPreferredSize(new Dimension (GameConstant.F_WIDTH, GameConstant.F_HEIGHT));
-		px = GameConstant.F_WIDTH / 2 - 50;
-		py = GameConstant.F_HEIGHT / 2 - 50;
 		y_img = 0;
-		health = 100;
 
-		loadImages();
+		new ImageLoader();
+		backgroundImage = ImageLoader.spaceBackground;
 
 		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(ImageLoader.cursorImage, new Point(15,15), "CustomCursor"));
 
-		player = new PlayerShip (10, px, py, health, rocketImage, bulletImage, fireSprites);
 		entitySet = new EntitySet(this);
 
 		setFocusable(true);
@@ -62,23 +51,11 @@ public class BackgroundPanel extends GPanel implements Runnable {
 		addMouseMotionListener(new Listener());
 		addMouseListener(new Listener());
 	}
-
-	private void loadImages () {
-		new ImageLoader();
-		this.backgroundImage = ImageLoader.spaceBackground;
-		this.rocketImage = ImageLoader.rocketSprite;
-		this.fireSprites = ImageLoader.fireAnimationSprites;
-		this.bulletImage = ImageLoader.bulletSprite;
-		checkImage(backgroundImage, this);
-		checkImage(rocketImage, this);
-		checkImage(bulletImage, this);
-	}
 	
 	public void start () {
 		isGameOn = true;
 		thread = new Thread (this);
 		thread.start();
-		
 	}
 	
 	public void stop () {
@@ -90,9 +67,7 @@ public class BackgroundPanel extends GPanel implements Runnable {
 		while (isGameOn) {
 			try {
 				moveBackground();
-				player.move(px, py);
-				player.moveBullet();
-				entitySet.move(player);
+				entitySet.move(px, py);
 
 				repaint();
 
@@ -114,13 +89,9 @@ public class BackgroundPanel extends GPanel implements Runnable {
 	 */
 	public void paintComponent (Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(backgroundImage, 0, y_img - GameConstant.F_HEIGHT, GameConstant.F_WIDTH, GameConstant.F_HEIGHT, null);
-		g.drawImage(backgroundImage, 0, y_img, GameConstant.F_WIDTH, GameConstant.F_HEIGHT, null);
-		
-		if (player.isMove()) 
-			player.drawFire(g);
-		
-		player.draw(g);
+		g.drawImage(backgroundImage, 0, y_img - GameConstant.F_HEIGHT, GameConstant.F_WIDTH, GameConstant.F_HEIGHT, this);
+		g.drawImage(backgroundImage, 0, y_img, GameConstant.F_WIDTH, GameConstant.F_HEIGHT, this);
+
 		entitySet.draw(g);
 
 		g.setFont(GameConstant.SYSTEM_FONT);
@@ -135,8 +106,9 @@ public class BackgroundPanel extends GPanel implements Runnable {
 	private void moveBackground () {
 		y_img += GameConstant.ANIMATION_SPEED;
 		length += GameConstant.ANIMATION_SPEED * Changable.gameSpeed / 3;
-		if (y_img >= GameConstant.F_HEIGHT)
+		if (y_img >= GameConstant.F_HEIGHT) {
 			y_img = 0;
+		}
 	}
 
 	private void incrementScore() {
@@ -144,13 +116,13 @@ public class BackgroundPanel extends GPanel implements Runnable {
 	}
 
 	private void checkIfPlayerCollectedCoin () {
-		if (player.isCollectedCoin())
+		if (entitySet.getPlayer().isCollectedCoin())
 			incrementScore();
 	}
 
 	private void checkIfPlayerDestroyed () {
 		try {
-			if (player.isCrushed())
+			if (entitySet.getPlayer().isCrushed())
 				systemStop();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -186,7 +158,7 @@ public class BackgroundPanel extends GPanel implements Runnable {
 				Init.setPausePanel();
 
 			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-				player.shoot();
+				entitySet.playerShoot();
 			}
 			
 		}
@@ -202,7 +174,7 @@ public class BackgroundPanel extends GPanel implements Runnable {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			player.shoot();
+			entitySet.playerShoot();
 		}
 
 		@Override

@@ -46,6 +46,10 @@ public class BulletSet implements Set {
         bullets.add(new Bullet(10, x, y, dir, bulletImage));
     }
 
+    public void generateEntity (Bullet b) {
+        bullets.add(b);
+    }
+
     public ArrayList<Bullet> getBullets() {
         return bullets;
     }
