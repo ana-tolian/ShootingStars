@@ -1,7 +1,9 @@
 package program.game.shootingStars.entities.set;
 
+import program.game.shootingStars.entities.Bullet;
 import program.game.shootingStars.entities.EnemyShip;
 import program.game.shootingStars.entities.PlayerShip;
+import program.game.shootingStars.entities.StaticEntity;
 import program.game.shootingStars.variables.changable.Changable;
 import program.game.shootingStars.variables.constant.GameConstant;
 
@@ -19,7 +21,6 @@ public class EnemyShipSet implements Set {
         this.enemyImage = ship;
         this.bulletImage = bullet;
         this.enemies = new ArrayList<>(Changable.asteroidCount);
-        generateEntity();
     }
 
     public void draw (Graphics g) {
@@ -42,12 +43,27 @@ public class EnemyShipSet implements Set {
                 return;
             }
         }
-        generateEntity();
     }
 
     public void generateEntity () {
         for (int i = 0; i < Changable.enemyCount - enemies.size(); i++) {
             enemies.add(new EnemyShip(10, 100, enemyImage, bulletImage));
         }
+    }
+
+    public ArrayList<EnemyShip> getEnemies () {
+        return enemies;
+    }
+
+    public int getSize () {
+        return enemies.size();
+    }
+
+    public StaticEntity getEntity (int i) {
+        return enemies.get(i);
+    }
+
+    public void removeEntity (int i) {
+        enemies.remove(i);
     }
 }

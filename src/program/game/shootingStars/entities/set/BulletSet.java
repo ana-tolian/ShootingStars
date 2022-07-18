@@ -2,6 +2,7 @@ package program.game.shootingStars.entities.set;
 
 import program.game.shootingStars.entities.Bullet;
 import program.game.shootingStars.entities.PlayerShip;
+import program.game.shootingStars.entities.StaticEntity;
 import program.game.shootingStars.variables.changable.Changable;
 
 import java.awt.*;
@@ -9,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 
-public class BulletSet {
+public class BulletSet implements Set {
 
     private BufferedImage bulletImage;
     private ArrayList<Bullet> bullets;
@@ -33,7 +34,7 @@ public class BulletSet {
             if (!a.isEntityOnScreen())
                 bullets.remove(i);
 
-            if (a.isIntersects(p)) {
+            if (a.isIntersects(p) && !a.isDirectionUp()) {
                 bullets.remove(i);
                 p.setCrushed(true);
                 return;
@@ -43,5 +44,21 @@ public class BulletSet {
 
     public void generateEntity (int x, int y, boolean dir) {
         bullets.add(new Bullet(10, x, y, dir, bulletImage));
+    }
+
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
+    }
+
+    public int getSize () {
+        return bullets.size();
+    }
+
+    public StaticEntity getEntity (int i) {
+        return bullets.get(i);
+    }
+
+    public void removeEntity (int i) {
+        bullets.remove(i);
     }
 }

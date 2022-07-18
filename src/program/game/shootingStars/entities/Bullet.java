@@ -28,4 +28,8 @@ public class Bullet extends StaticEntity {
         else
             return false;
     }
+
+    public boolean isDirectionUp() {
+        return directionUp;
+    }
 }

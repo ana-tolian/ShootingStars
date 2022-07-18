@@ -2,10 +2,12 @@ package program.game.shootingStars.menu;
 
 import program.game.shootingStars.*;
 import program.game.shootingStars.entities.EnemyShip;
+import program.game.shootingStars.entities.Entity;
 import program.game.shootingStars.entities.set.AsteroidSet;
 import program.game.shootingStars.entities.PlayerShip;
 import program.game.shootingStars.entities.set.CoinSet;
 import program.game.shootingStars.entities.set.EnemyShipSet;
+import program.game.shootingStars.entities.set.EntitySet;
 import program.game.shootingStars.ui.GPanel;
 import program.game.shootingStars.variables.changable.Changable;
 import program.game.shootingStars.variables.constant.GameConstant;
@@ -18,17 +20,12 @@ import java.awt.image.BufferedImage;
 public class BackgroundPanel extends GPanel implements Runnable {
 	
 	private PlayerShip player;
-	private AsteroidSet asteroids;
-	private CoinSet coins;
-	private EnemyShipSet enemies;
-	
+	private EntitySet entitySet;
+
 	private BufferedImage backgroundImage;
-	private BufferedImage rocketImage;
-	private BufferedImage asteroidImage;
-	private BufferedImage enemyImage;
-	private BufferedImage bulletImage;
-	private BufferedImage coinImage;
 	private BufferedImage fireSprites [];
+	private BufferedImage rocketImage;
+	private BufferedImage bulletImage;
 
 	private int y_img;
 	private int score = 0;
@@ -51,34 +48,30 @@ public class BackgroundPanel extends GPanel implements Runnable {
 		py = GameConstant.F_HEIGHT / 2 - 50;
 		y_img = 0;
 		health = 100;
-		
-		new ImageLoader();
-		backgroundImage = ImageLoader.spaceBackground;
-		rocketImage = ImageLoader.rocketSprite;
-		fireSprites = ImageLoader.fireAnimationSprites;
-		asteroidImage = ImageLoader.asteroidSprite;
-		enemyImage = ImageLoader.enemySprite;
-		bulletImage = ImageLoader.bulletSprite;
-		coinImage = ImageLoader.coinSprite;
-		checkImage(backgroundImage, this);
-		checkImage(rocketImage, this);
-		checkImage(asteroidImage, this);
-		checkImage(enemyImage, this);
-		checkImage(bulletImage, this);
-		checkImage(coinImage, this);
+
+		loadImages();
 
 		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(ImageLoader.cursorImage, new Point(15,15), "CustomCursor"));
 
 		player = new PlayerShip (10, px, py, health, rocketImage, bulletImage, fireSprites);
-		asteroids = new AsteroidSet(asteroidImage);
-		coins = new CoinSet(coinImage);
-		enemies = new EnemyShipSet(enemyImage, bulletImage);
+		entitySet = new EntitySet(this);
 
 		setFocusable(true);
 		requestFocus();
 		addKeyListener (new Listener ());
 		addMouseMotionListener(new Listener());
 		addMouseListener(new Listener());
+	}
+
+	private void loadImages () {
+		new ImageLoader();
+		this.backgroundImage = ImageLoader.spaceBackground;
+		this.rocketImage = ImageLoader.rocketSprite;
+		this.fireSprites = ImageLoader.fireAnimationSprites;
+		this.bulletImage = ImageLoader.bulletSprite;
+		checkImage(backgroundImage, this);
+		checkImage(rocketImage, this);
+		checkImage(bulletImage, this);
 	}
 	
 	public void start () {
@@ -99,9 +92,7 @@ public class BackgroundPanel extends GPanel implements Runnable {
 				moveBackground();
 				player.move(px, py);
 				player.moveBullet();
-				coins.move(player);
-				asteroids.move(player);
-				enemies.move(player);
+				entitySet.move(player);
 
 				repaint();
 
@@ -130,9 +121,7 @@ public class BackgroundPanel extends GPanel implements Runnable {
 			player.drawFire(g);
 		
 		player.draw(g);
-		asteroids.draw(g);
-		coins.draw(g);
-		enemies.draw(g);
+		entitySet.draw(g);
 
 		g.setFont(GameConstant.SYSTEM_FONT);
 		g.setColor(Color.WHITE);

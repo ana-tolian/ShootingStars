@@ -1,11 +1,14 @@
 package program.game.shootingStars.entities.set;
 
 import program.game.shootingStars.entities.PlayerShip;
+import program.game.shootingStars.entities.StaticEntity;
 
 import java.awt.Graphics;
 
 public interface Set {
-    public void move (PlayerShip pl);
-    public void draw (Graphics g);
-    public void generateEntity ();
+    void move (PlayerShip pl);
+    void draw (Graphics g);
+    StaticEntity getEntity (int i);
+    void removeEntity (int i);
+    int getSize ();
 }
