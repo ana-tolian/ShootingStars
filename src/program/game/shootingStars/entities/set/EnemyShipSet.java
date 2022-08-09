@@ -38,8 +38,8 @@ public class EnemyShipSet implements Set {
                 enemies.remove(i);
 
             if (a.isIntersects(p)) {
-                enemies.remove(i);
-                p.setCrushed(true);
+                a.setDestroyed(true);
+                p.setDestroyed(true);
                 return;
             }
         }

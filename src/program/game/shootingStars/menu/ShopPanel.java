@@ -22,24 +22,48 @@ public class ShopPanel extends GPanel {
 
     private GLabel balanceLabel;
 
+    private GButton upgradeShipMenuButton;
+    private GButton shipShopMenuButton;
     private GButton backButton;
 
 
     public ShopPanel () {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        ImageLoader imageLoader = new ImageLoader();
+
         balancePanel = new GPanel();
         balancePanel.setMaximumSize(new Dimension(765, 60));
         balancePanel.setPreferredSize(new Dimension(765, 60));
 
         balanceLabel = new GLabel ();
-        balanceLabel.setIcon(new ImageLoader().getCoinIcon());
+        balanceLabel.setIcon(imageLoader.getCoinIcon());
         balanceLabel.setIconTextGap(5);
         balanceLabel.setPreferredSize(new Dimension(765, 30));
         balanceLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 10));
         balancePanel.add(balanceLabel);
 
         goodsPanel = new GPanel();
+        goodsPanel.setPreferredSize(new Dimension(765, 400));
+
+        shipShopMenuButton = new GButton ("");
+        shipShopMenuButton.setPreferredSize(new Dimension(340, 340));
+        shipShopMenuButton.setIcon(imageLoader.getShopIcon());
+        shipShopMenuButton.setActionCommand("shopping");
+        shipShopMenuButton.addActionListener(new ActionL());
+
+        GLabel nullLabel = new GLabel();
+        nullLabel.setPreferredSize(new Dimension(30, 30));
+
+        upgradeShipMenuButton = new GButton ("");
+        upgradeShipMenuButton.setPreferredSize(new Dimension(340, 340));
+        upgradeShipMenuButton.setIcon(imageLoader.getUpgradeIcon());
+        upgradeShipMenuButton.setActionCommand("upgrade");
+        upgradeShipMenuButton.addActionListener(new ActionL());
+
+        goodsPanel.add(upgradeShipMenuButton);
+        goodsPanel.add(nullLabel);
+        goodsPanel.add(shipShopMenuButton);;
 
         backButtonPanel = new GPanel();
 
@@ -65,6 +89,15 @@ public class ShopPanel extends GPanel {
 
             if (button.getActionCommand().equals("Back")) {
                 Init.setMainMenuPanel(Init.shopPanel);
+
+            } else if (button.getActionCommand().equals("shopping")) {
+                goodsPanel.removeAll();
+                goodsPanel.add(new ShopListPanel());
+                revalidate();
+//                Init.shopListPanel);
+
+            } else if (button.getActionCommand().equals("upgrade")) {
+//                IInit.upgradePanel);
             }
         }
     }

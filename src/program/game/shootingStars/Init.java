@@ -3,9 +3,7 @@ package program.game.shootingStars;
 import program.game.shootingStars.menu.*;
 import program.game.shootingStars.variables.constant.GameConstant;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 
 public class Init {
@@ -16,9 +14,8 @@ public class Init {
 	public static InfoPanel info;
 	public static PausePanel pausePanel;
 	public static ShopPanel shopPanel;
-	
 	protected static JFrame frame;
-	
+
 	
 	Init () {
 		createUI();

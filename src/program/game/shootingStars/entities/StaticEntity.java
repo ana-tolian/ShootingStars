@@ -1,5 +1,6 @@
 package program.game.shootingStars.entities;
 
+import program.game.shootingStars.ImageLoader;
 import program.game.shootingStars.variables.constant.GameConstant;
 
 import java.awt.Graphics;
@@ -15,7 +16,9 @@ public class StaticEntity implements Entity {
 	protected int width;
 	protected int height;
 	protected int health;
+	protected boolean isDestroyed = false;
 	protected BufferedImage img;
+	protected BufferedImage explosionImg = ImageLoader.explosionImage;
 
 	public StaticEntity(int speed, BufferedImage img) {
 		this.speed = speed;
@@ -58,7 +61,10 @@ public class StaticEntity implements Entity {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(img, x, y, width, height, null);
+		if (!isDestroyed)
+			g.drawImage(img, x, y, width, height, null);
+		else
+			g.drawImage(explosionImg, x, y,null);
 	}
 
 	@Override
@@ -114,6 +120,14 @@ public class StaticEntity implements Entity {
 	@Override
 	public int getY() {
 		return y;	
+	}
+
+	public boolean isDestroyed() {
+		return isDestroyed;
+	}
+
+	public void setDestroyed(boolean destroyed) {
+		isDestroyed = destroyed;
 	}
 
 	@Override

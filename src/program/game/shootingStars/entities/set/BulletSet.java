@@ -36,7 +36,7 @@ public class BulletSet implements Set {
 
             if (a.isIntersects(p) && !a.isDirectionUp()) {
                 bullets.remove(i);
-                p.setCrushed(true);
+                p.setDestroyed(true);
                 return;
             }
         }

@@ -121,7 +121,7 @@ public class BackgroundPanel extends GPanel implements Runnable {
 
 	private void checkIfPlayerDestroyed () {
 		try {
-			if (entitySet.getPlayer().isCrushed())
+			if (entitySet.getPlayer().isDestroyed())
 				systemStop();
 		} catch (InterruptedException e) {
 			e.printStackTrace();

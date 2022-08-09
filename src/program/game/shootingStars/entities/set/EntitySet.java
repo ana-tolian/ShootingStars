@@ -2,21 +2,28 @@ package program.game.shootingStars.entities.set;
 
 import program.game.shootingStars.ImageLoader;
 import program.game.shootingStars.entities.PlayerShip;
+import program.game.shootingStars.entities.StaticEntity;
 import program.game.shootingStars.variables.changable.Changable;
 import program.game.shootingStars.variables.constant.GameConstant;
 
 import javax.swing.JPanel;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 
 public class EntitySet {
+
+    private final int EXPLOSION_TACTS = 6;
+    private int tact = 0;
 
     private AsteroidSet asteroids;
     private CoinSet coins;
     private EnemyShipSet enemies;
     private BulletSet bullets;
     private PlayerShip player;
+
+    private ArrayList<StaticEntity> markedAsDestroyed;
 
     private BufferedImage asteroidImage;
     private BufferedImage enemyImage;
@@ -32,6 +39,8 @@ public class EntitySet {
     public EntitySet (JPanel panel) {
         loadImages(panel);
 
+        markedAsDestroyed = new ArrayList<>();
+
         this.coins = new CoinSet(coinImage);
         this.asteroids = new AsteroidSet(asteroidImage);
         this.enemies = new EnemyShipSet(enemyImage, bulletImage);
@@ -39,7 +48,10 @@ public class EntitySet {
 
         px = GameConstant.F_WIDTH / 2 - 50;
         py = GameConstant.F_HEIGHT / 2 - 50;
-        this.player = new PlayerShip (10, px, py, 100, rocketImage, fireSprites);
+
+        int gunposx [] = {rocketImage.getWidth() / 4, rocketImage.getWidth() * 3 / 4};
+        int gunposy [] = {0, 0};
+        this.player = new PlayerShip (10, px, py, 100, rocketImage, fireSprites, 2, gunposx, gunposy);
 
         generateEntity();
     }
@@ -65,9 +77,23 @@ public class EntitySet {
         enemies.draw(g);
         bullets.draw(g);
         player.draw(g);
+
         if (player.isMove())
             player.drawFire(g);
 
+        drawDestroyed(g);
+
+    }
+
+    private void drawDestroyed (Graphics g) {
+        for (StaticEntity e : markedAsDestroyed)
+            e.draw(g);
+        tact++;
+
+        if (tact >= EXPLOSION_TACTS) {
+            markedAsDestroyed.clear();
+            tact = 0;
+        }
     }
 
     public void move (int x, int y) {
@@ -97,7 +123,10 @@ public class EntitySet {
         if (j >= set.getSize()) {
             return;
         } else if (bullets.getEntity(i).isIntersects(set.getEntity(j))) {
+            StaticEntity e = set.getEntity(j);
             set.removeEntity(j);
+            markedAsDestroyed.add(e);
+            e.setDestroyed(true);
         }
     }
 
@@ -116,6 +145,7 @@ public class EntitySet {
     }
 
     public void playerShoot () {
-        bullets.generateEntity(player.getX() + (player.getWidth() >> 1) - 1, player.getY(), true);
+        for (Point shot : player.shoot())
+            bullets.generateEntity(shot.x, shot.y, true);
     }
 }

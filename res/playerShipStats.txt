@@ -1,0 +1,2 @@
+name=|gun_level=|hull_level=|special={}
+Rocket|1|1|none

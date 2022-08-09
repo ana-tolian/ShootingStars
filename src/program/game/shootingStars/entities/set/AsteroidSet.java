@@ -36,7 +36,8 @@ public class AsteroidSet implements Set {
                 asteroids.remove(i);
 
             if (a.isIntersects(p)) {
-                p.setCrushed(true);
+                a.setDestroyed(true);
+                p.setDestroyed(true);
                 return;
             }
         }
