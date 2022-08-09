@@ -180,3 +180,4 @@
 | score: 2 distance: 1372 | 
 | score: 2 distance: 9018 | 
 | score: 8 distance: 42054 | 
+| score: 0 distance: 250 | 

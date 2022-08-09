@@ -9,8 +9,16 @@ import java.awt.event.MouseEvent;
 
 public class GButton extends JButton {
 
+    public GButton () {
+        setup();
+    }
+
     public GButton (String text) {
         setText(text);
+        setup();
+    }
+
+    private void setup () {
         setFocusable(false);
         setAlignmentX(SwingConstants.CENTER);
         setAlignmentY(SwingConstants.CENTER);

@@ -24,6 +24,8 @@ public class ImageLoader {
 	private ImageIcon coinIcon;
 	private ImageIcon upgradeIcon;
 	private ImageIcon shopIcon;
+	private ImageIcon upArrow;
+	private ImageIcon downArrow;
 	
 	
 	public ImageLoader () {
@@ -36,6 +38,8 @@ public class ImageLoader {
 		coinIcon = new ImageIcon(PathConstant.FILE_PATH_COIN_SPRITE);
 		upgradeIcon = new ImageIcon(PathConstant.FILE_PATH_UPGRADE_ICON);
 		shopIcon = new ImageIcon(PathConstant.FILE_PATH_SHOP_ICON);
+		upArrow = new ImageIcon(PathConstant.FILE_PATH_UP_ARROW);
+		downArrow = new ImageIcon(PathConstant.FILE_PATH_DOWN_ARROW);
 
 		coinIcon.getImage().flush();
 		upgradeIcon.getImage().flush();
@@ -83,6 +87,14 @@ public class ImageLoader {
 
 	public ImageIcon getShopIcon () {
 		return shopIcon;
+	}
+
+	public ImageIcon getUpArrowIcon () {
+		return upArrow;
+	}
+
+	public ImageIcon getDownArrowIcon () {
+		return downArrow;
 	}
 
 }

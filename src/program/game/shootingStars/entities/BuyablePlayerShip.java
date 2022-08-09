@@ -1,6 +1,7 @@
 package program.game.shootingStars.entities;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class BuyablePlayerShip extends PlayerShip implements Buyable {
@@ -61,6 +62,8 @@ public class BuyablePlayerShip extends PlayerShip implements Buyable {
 
     @Override
     public ImageIcon getIcon () {
-        return new ImageIcon(img);
+        ImageIcon imageIcon = new ImageIcon(
+                new ImageIcon(img).getImage().getScaledInstance(width*3, height*3, Image.SCALE_DEFAULT));
+        return imageIcon;
     }
 }
