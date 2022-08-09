@@ -26,7 +26,7 @@ public class Init {
 		frame = new JFrame ("Shooting Star");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(GameConstant.F_WIDTH, GameConstant.F_HEIGHT);
-		frame.setResizable(false);
+//		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 
 		main = new MainMenuPanel ();

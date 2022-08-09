@@ -181,3 +181,7 @@
 | score: 2 distance: 9018 | 
 | score: 8 distance: 42054 | 
 | score: 0 distance: 250 | 
+| score: 3 distance: 1962 | 
+| score: 7 distance: 7716 | 
+| score: 0 distance: 140 | 
+| score: 19 distance: 5628 | 

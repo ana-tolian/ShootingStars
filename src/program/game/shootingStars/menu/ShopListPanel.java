@@ -17,63 +17,31 @@ import java.util.ArrayList;
 public class ShopListPanel extends GPanel {
 
     private ArrayList<BuyablePlayerShip> shipsInStock;
+    private ImageLoader imageLoader;
 
     private GPanel upDownButtonPanel;
-    private GPanel shipsPanel;
-    private GPanel shipInfoLabelPanel;
+    private GPanel shipsPanel [];
+    private GPanel shipTextInfoPanel[];
 
+    private GLabel shipImageLabel [];
+    private GTextArea characteristicLabel [];
+    private GTextArea descriptionLabel [];
+
+    private GButton buyButton [];
     private GButton upButton;
     private GButton downButton;
-    private GButton buyButton;
-
-    private GLabel shipImageLabel;
-    private GTextArea characteristicLabel;
-    private GTextArea descriptionLabel;
 
 
     public ShopListPanel () {
-        setPreferredSize(new Dimension(765, 400));
-        ImageLoader imageLoader = new ImageLoader();
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+//        setPreferredSize(new Dimension(765, 450));
 
+        imageLoader = new ImageLoader();
         shipsInStock = new GameInfoLoader().getShipsInStock();;
-        BuyablePlayerShip stock = shipsInStock.get(0);
 
-        shipsPanel = new GPanel();
-        shipsPanel.setLayout(new FlowLayout());
-
-        shipInfoLabelPanel = new GPanel();
-        shipInfoLabelPanel.setLayout(new BoxLayout(shipInfoLabelPanel, BoxLayout.Y_AXIS));
-        shipInfoLabelPanel.setBorder(BorderFactory.createLineBorder(GameConstant.LINE_COLOR, GameConstant.LINE_THICKNESS));
-
-        shipImageLabel = new GLabel();
-        shipImageLabel.setIconTextGap(20);
-        shipImageLabel.setIcon(stock.getIcon());
-        shipImageLabel.setPreferredSize(new Dimension(100, 200));
-        shipImageLabel.setBorder(BorderFactory.createLineBorder(GameConstant.LINE_COLOR, GameConstant.LINE_THICKNESS));
-
-        characteristicLabel = new GTextArea();
-        characteristicLabel.setText("Name: " + stock.getName() +
-                                    "\nTurrets: " + stock.getNumberOfGuns() +
-                                    "\nHealth: " + stock.getHealth() +
-                                    "\nSpecial abilities: " + stock.getSpecial());
-
-        descriptionLabel = new GTextArea();
-        descriptionLabel.setText("Description: " + stock.getDescription());
-        descriptionLabel.setColumns(22);
-
-        buyButton = new GButton(stock.getCost() + "");
-        buyButton.setIconTextGap(5);
-        buyButton.setIcon(imageLoader.getCoinIcon());
-        buyButton.setPreferredSize(new Dimension(110, 200));
-
-        shipInfoLabelPanel.add(characteristicLabel);
-        shipInfoLabelPanel.add(descriptionLabel);
-
-        shipsPanel.add(shipImageLabel);
-        shipsPanel.add(shipInfoLabelPanel);
-        shipsPanel.add(buyButton);
-
-
+        initializeArrays();
+        initializeGraphicElements();
 
         upDownButtonPanel = new GPanel();
         upDownButtonPanel.setLayout(new BoxLayout(upDownButtonPanel, BoxLayout.Y_AXIS));
@@ -85,12 +53,68 @@ public class ShopListPanel extends GPanel {
         downButton.setPreferredSize(new Dimension(48, 48));
         downButton.setIcon(imageLoader.getDownArrowIcon());
 
-        upDownButtonPanel.add(upButton);
-        upDownButtonPanel.add(downButton);
+//        upDownButtonPanel.add(upButton);
+//        upDownButtonPanel.add(downButton);
 
 
-        add(shipsPanel);
-        add(upDownButtonPanel);
+        add(shipsPanel[0]);
+//        add(upDownButtonPanel);
+        add(shipsPanel[1]);
+        add(shipsPanel[2]);
+        add(shipsPanel[3]);
+        add(shipsPanel[4]);
+        add(shipsPanel[5]);
+    }
+
+    private void initializeArrays () {
+        shipsPanel = new GPanel[shipsInStock.size()];
+        shipTextInfoPanel = new GPanel[shipsInStock.size()];
+        shipImageLabel = new GLabel[shipsInStock.size()];
+        characteristicLabel = new GTextArea[shipsInStock.size()];
+        descriptionLabel = new GTextArea[shipsInStock.size()];
+        buyButton = new GButton[shipsInStock.size()];
+    }
+
+    private void initializeGraphicElements () {
+        BuyablePlayerShip stock;
+        for (int i = 0; i < shipsInStock.size(); i++) {
+            stock = shipsInStock.get(i);
+
+            shipsPanel[i] = new GPanel();
+            shipsPanel[i].setLayout(new FlowLayout());
+
+            shipTextInfoPanel[i] = new GPanel();
+            shipTextInfoPanel[i].setLayout(new BoxLayout(shipTextInfoPanel[i], BoxLayout.Y_AXIS));
+            shipTextInfoPanel[i].setBorder(BorderFactory.createLineBorder(GameConstant.LINE_COLOR, GameConstant.LINE_THICKNESS));
+
+            shipImageLabel[i] = new GLabel();
+            shipImageLabel[i].setIconTextGap(20);
+            shipImageLabel[i].setIcon(stock.getIcon());
+            shipImageLabel[i].setPreferredSize(new Dimension(100, 200));
+            shipImageLabel[i].setBorder(BorderFactory.createLineBorder(GameConstant.LINE_COLOR, GameConstant.LINE_THICKNESS));
+
+            characteristicLabel[i] = new GTextArea();
+            characteristicLabel[i].setText("Name: " + stock.getName() +
+                    "\nTurrets: " + stock.getNumberOfGuns() +
+                    "\nHealth: " + stock.getHealth() +
+                    "\nSpecial abilities: " + stock.getSpecial());
+
+            descriptionLabel[i] = new GTextArea(2, 22);
+            descriptionLabel[i].setText("Description: " + stock.getDescription());
+
+            buyButton[i] = new GButton(stock.getCost() + "");
+            buyButton[i].setIconTextGap(5);
+            buyButton[i].setIcon(imageLoader.getCoinIcon());
+            buyButton[i].setPreferredSize(new Dimension(110, 200));
+
+            shipTextInfoPanel[i].add(characteristicLabel[i]);
+            shipTextInfoPanel[i].add(descriptionLabel[i]);
+
+            shipsPanel[i].add(shipImageLabel[i]);
+            shipsPanel[i].add(shipTextInfoPanel[i]);
+            shipsPanel[i].add(buyButton[i]);
+
+        }
     }
 
 }

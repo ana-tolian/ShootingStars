@@ -33,18 +33,18 @@ public class ShopPanel extends GPanel {
         ImageLoader imageLoader = new ImageLoader();
 
         balancePanel = new GPanel();
-        balancePanel.setMaximumSize(new Dimension(765, 60));
-        balancePanel.setPreferredSize(new Dimension(765, 60));
+//        balancePanel.setMaximumSize(new Dimension(765, 60));
+//        balancePanel.setPreferredSize(new Dimension(765, 60));
 
         balanceLabel = new GLabel ();
         balanceLabel.setIcon(imageLoader.getCoinIcon());
         balanceLabel.setIconTextGap(5);
-        balanceLabel.setPreferredSize(new Dimension(765, 30));
+//        balanceLabel.setPreferredSize(new Dimension(765, 30));
         balanceLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 10));
         balancePanel.add(balanceLabel);
 
         goodsPanel = new GPanel();
-        goodsPanel.setPreferredSize(new Dimension(765, 400));
+//        goodsPanel.setPreferredSize(new Dimension(765, 400));
 
         shipShopMenuButton = new GButton ("");
         shipShopMenuButton.setPreferredSize(new Dimension(340, 340));
@@ -66,6 +66,7 @@ public class ShopPanel extends GPanel {
         goodsPanel.add(shipShopMenuButton);;
 
         backButtonPanel = new GPanel();
+        backButtonPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 50, 30));
 
         backButton = new GButton("Back");
         backButton.addActionListener(new ActionL());
@@ -92,7 +93,7 @@ public class ShopPanel extends GPanel {
 
             } else if (button.getActionCommand().equals("shopping")) {
                 goodsPanel.removeAll();
-                goodsPanel.add(new ShopListPanel());
+                goodsPanel.add(new JScrollPane(new ShopListPanel()));
                 revalidate();
 //                Init.shopListPanel);
 
