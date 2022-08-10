@@ -1,11 +1,9 @@
 package program.game.shootingStars.entities.set;
 
 import program.game.shootingStars.entities.Asteroid;
-import program.game.shootingStars.entities.Bullet;
 import program.game.shootingStars.entities.PlayerShip;
 import program.game.shootingStars.entities.StaticEntity;
 import program.game.shootingStars.variables.changable.Changable;
-import program.game.shootingStars.variables.constant.GameConstant;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

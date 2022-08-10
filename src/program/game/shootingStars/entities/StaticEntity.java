@@ -8,9 +8,9 @@ import java.awt.image.BufferedImage;
 
 
 public class StaticEntity implements Entity {
-	
-	public int speed = 10;
-	
+
+	public int speed;
+
 	protected int x;
 	protected int y;
 	protected int width;

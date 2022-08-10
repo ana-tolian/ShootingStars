@@ -36,14 +36,15 @@ public class ShopListPanel extends GPanel implements ActionListener {
     private GButton buyButton [];
 
 
-    public ShopListPanel (ShopPanel shop) {
+    public ShopListPanel (ShopPanel shop, ImageLoader imageLoader,
+                          GamePlayerDataIO balance, GameGeneralDataIO generalDataIO) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
         this.shop = shop;
-        imageLoader = new ImageLoader();
-        balance = new GamePlayerDataIO();
-        generalDataIO = new GameGeneralDataIO();
+        this.imageLoader = imageLoader;
+        this.balance = balance;
+        this.generalDataIO = generalDataIO;
         shipsInStock = generalDataIO.getShipsInStock();;
 
         initializeArrays();

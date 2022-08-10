@@ -1,6 +1,5 @@
 package program.game.shootingStars.entities.set;
 
-import program.game.shootingStars.entities.Bullet;
 import program.game.shootingStars.entities.Coin;
 import program.game.shootingStars.entities.PlayerShip;
 import program.game.shootingStars.entities.StaticEntity;
@@ -15,10 +14,12 @@ public class CoinSet implements Set {
 
     private BufferedImage coinImage;
     private ArrayList<Coin> coins;
+    private ArrayList<StaticEntity> markedAsDestroyed;
 
-    public CoinSet (BufferedImage bi) {
+    public CoinSet (BufferedImage bi, ArrayList<StaticEntity> markedAsDestroyed) {
         this.coinImage = bi;
         this.coins = new ArrayList<>(Changable.asteroidCount);
+        this.markedAsDestroyed = markedAsDestroyed;
     }
 
     public void draw (Graphics g) {
@@ -36,6 +37,8 @@ public class CoinSet implements Set {
                 coins.remove(i);
 
             if (a.isIntersects(p)) {
+                coins.get(i).setDestroyed(true);
+                markedAsDestroyed.add(coins.get(i));
                 coins.remove(i);
                 p.setCollectedCoin(true);
             }

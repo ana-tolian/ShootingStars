@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class EntitySet {
 
-    private final int EXPLOSION_TACTS = 6;
+    private final int EXPLOSION_TACTS = 9;
     private int tact = 0;
 
     private AsteroidSet asteroids;
@@ -34,27 +34,21 @@ public class EntitySet {
     private BufferedImage enemyImage;
     private BufferedImage bulletImage;
     private BufferedImage coinImage;
-    private BufferedImage fireSprites [];
     private BufferedImage rocketImage;
-
-    private int px;
-    private int py;
 
 
     public EntitySet (JPanel panel) {
         loadImages(panel);
 
-        this.coins = new CoinSet(coinImage);
+        this.markedAsDestroyed = new ArrayList<>();
+        this.generalDataIO = new GameGeneralDataIO();
+        this.possibleShips = generalDataIO.getShipsInStock();
+
+        this.coins = new CoinSet(coinImage, markedAsDestroyed);
         this.asteroids = new AsteroidSet(asteroidImage);
         this.enemies = new EnemyShipSet(enemyImage, bulletImage);
         this.bullets = new BulletSet(bulletImage);
 
-        px = GameConstant.F_WIDTH / 2 - 50;
-        py = GameConstant.F_HEIGHT / 2 - 50;
-
-        this.markedAsDestroyed = new ArrayList<>();
-        this.generalDataIO = new GameGeneralDataIO();
-        this.possibleShips = generalDataIO.getShipsInStock();
         this.player = getEquippedShip();
 
         generateEntity();
@@ -62,7 +56,6 @@ public class EntitySet {
 
     private void loadImages (JPanel panel) {
         this.rocketImage = ImageLoader.rocketSprite;
-        this.fireSprites = ImageLoader.fireAnimationSprites;
         this.bulletImage = ImageLoader.bulletSprite;
         this.asteroidImage = ImageLoader.asteroidSprite;
         this.enemyImage = ImageLoader.enemySprite;

@@ -18,8 +18,10 @@ public class ImageLoader {
 	public static BufferedImage bulletSprite;
 	public static BufferedImage cursorImage;
 	public static BufferedImage explosionImage;
+	public static BufferedImage coinCollectedImage;
 
 	public static BufferedImage fireAnimationSprites [];
+	public static BufferedImage moduleLevelSprite[];
 
 	private ImageIcon coinIcon;
 	private ImageIcon upgradeIcon;
@@ -30,6 +32,7 @@ public class ImageLoader {
 	
 	public ImageLoader () {
 		fireAnimationSprites = new BufferedImage [15];
+		moduleLevelSprite = new BufferedImage [5];
 		loadIcons();
 		loadImages();
 	}
@@ -57,10 +60,15 @@ public class ImageLoader {
 			bulletSprite = ImageIO.read(new File (PathConstant.FILE_PATH_BULLET_SPRITE));
 			cursorImage = ImageIO.read(new File (PathConstant.FILE_PATH_CURSOR));
 			explosionImage = ImageIO.read(new File (PathConstant.FILE_PATH_EXPLOSION_SPRITE));
+			coinCollectedImage = ImageIO.read(new File (PathConstant.FILE_PATH_COIN_COLLECTED_SPRITE));
 //			Image curImage = Toolkit.getDefaultToolkit().createImage(getClass().getResource("/images/cursor.png"));
 
-			for (int i = 0; i <  fireAnimationSprites.length; i++) {
+			for (int i = 0; i < fireAnimationSprites.length; i++) {
 				 fireAnimationSprites[i] = ImageIO.read(new File (PathConstant.FILE_PATH_FIRE_SPRITE + "fire" + i + ".png"));
+			}
+
+			for (int i = 0; i < moduleLevelSprite.length; i++) {
+				moduleLevelSprite[i] = ImageIO.read(new File (PathConstant.FILE_PATH_SCALE_SPRITE + "scale" + (i + 1) + ".png"));
 			}
 			
 		} catch (Exception e) {}

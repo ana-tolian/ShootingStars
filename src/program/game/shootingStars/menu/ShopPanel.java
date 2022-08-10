@@ -1,5 +1,6 @@
 package program.game.shootingStars.menu;
 
+import program.game.shootingStars.GameGeneralDataIO;
 import program.game.shootingStars.ImageLoader;
 import program.game.shootingStars.Init;
 import program.game.shootingStars.GamePlayerDataIO;
@@ -14,6 +15,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ShopPanel extends GPanel implements ActionListener {
+
+    private GameGeneralDataIO generalDataIO;
+    private ImageLoader imageLoader;
+    private GamePlayerDataIO balance;
 
     private GPanel balancePanel;
     private GPanel goodsPanel;
@@ -32,7 +37,9 @@ public class ShopPanel extends GPanel implements ActionListener {
     public ShopPanel () {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        ImageLoader imageLoader = new ImageLoader();
+        imageLoader = new ImageLoader();
+        balance = new GamePlayerDataIO();
+        generalDataIO = new GameGeneralDataIO();
 
         balancePanel = new GPanel();
 
@@ -96,10 +103,10 @@ public class ShopPanel extends GPanel implements ActionListener {
                 changePanel(buttonPanel);
 
         } else if (button.getActionCommand().equals("shopping")) {
-            changePanel(new GScrollPane(new ShopListPanel(this)));
+            changePanel(new GScrollPane(new ShopListPanel(this, imageLoader, balance, generalDataIO)));
 
         } else if (button.getActionCommand().equals("upgrade")) {
-            changePanel(new UpgradePanel());
+            changePanel(new UpgradePanel(this, imageLoader, balance, generalDataIO));
         }
     }
 
