@@ -19,5 +19,6 @@ public class PathConstant {
 
     public static final String FILE_PATH_SHIPS_INFO = "res/ships.txt";
     public static final String FILE_PATH_MONEY = "res/money.txt";
+    public static final String FILE_PATH_EQUIPPED = "res/equipped.txt";
     public static final String FILE_PATH_SAVED_RESULTS = "res/results.txt";
 }

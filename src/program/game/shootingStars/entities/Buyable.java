@@ -8,6 +8,7 @@ public interface Buyable {
     String getDescription ();
     int getCost ();
     boolean isBought ();
+    void buy ();
     String getSpecial ();
     ImageIcon getIcon ();
 }

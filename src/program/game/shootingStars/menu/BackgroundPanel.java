@@ -1,12 +1,6 @@
 package program.game.shootingStars.menu;
 
 import program.game.shootingStars.*;
-import program.game.shootingStars.entities.EnemyShip;
-import program.game.shootingStars.entities.Entity;
-import program.game.shootingStars.entities.set.AsteroidSet;
-import program.game.shootingStars.entities.PlayerShip;
-import program.game.shootingStars.entities.set.CoinSet;
-import program.game.shootingStars.entities.set.EnemyShipSet;
 import program.game.shootingStars.entities.set.EntitySet;
 import program.game.shootingStars.ui.GPanel;
 import program.game.shootingStars.variables.changable.Changable;
@@ -135,7 +129,7 @@ public class BackgroundPanel extends GPanel implements Runnable {
 	}
 
 	public void save () {
-		new SaveResults(score, length).save();
+		new GamePlayerDataIO().save(score, length);
 	}
 	
 	public void changeDifficult () {

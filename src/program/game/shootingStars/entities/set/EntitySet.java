@@ -1,6 +1,8 @@
 package program.game.shootingStars.entities.set;
 
+import program.game.shootingStars.GameGeneralDataIO;
 import program.game.shootingStars.ImageLoader;
+import program.game.shootingStars.entities.BuyablePlayerShip;
 import program.game.shootingStars.entities.PlayerShip;
 import program.game.shootingStars.entities.StaticEntity;
 import program.game.shootingStars.variables.changable.Changable;
@@ -24,6 +26,9 @@ public class EntitySet {
     private PlayerShip player;
 
     private ArrayList<StaticEntity> markedAsDestroyed;
+    private ArrayList<BuyablePlayerShip> possibleShips;
+
+    private GameGeneralDataIO generalDataIO;
 
     private BufferedImage asteroidImage;
     private BufferedImage enemyImage;
@@ -39,8 +44,6 @@ public class EntitySet {
     public EntitySet (JPanel panel) {
         loadImages(panel);
 
-        markedAsDestroyed = new ArrayList<>();
-
         this.coins = new CoinSet(coinImage);
         this.asteroids = new AsteroidSet(asteroidImage);
         this.enemies = new EnemyShipSet(enemyImage, bulletImage);
@@ -49,9 +52,10 @@ public class EntitySet {
         px = GameConstant.F_WIDTH / 2 - 50;
         py = GameConstant.F_HEIGHT / 2 - 50;
 
-        int gunposx [] = {rocketImage.getWidth() / 4, rocketImage.getWidth() * 3 / 4};
-        int gunposy [] = {0, 0};
-        this.player = new PlayerShip (10, px, py, 100, rocketImage, fireSprites, 2, gunposx, gunposy);
+        this.markedAsDestroyed = new ArrayList<>();
+        this.generalDataIO = new GameGeneralDataIO();
+        this.possibleShips = generalDataIO.getShipsInStock();
+        this.player = getEquippedShip();
 
         generateEntity();
     }
@@ -128,6 +132,17 @@ public class EntitySet {
             markedAsDestroyed.add(e);
             e.setDestroyed(true);
         }
+    }
+
+    private PlayerShip getEquippedShip () {
+        PlayerShip player = null;
+
+        for (BuyablePlayerShip p : possibleShips) {
+            if (p.isEquipped()) {
+                player = p;
+            }
+        }
+        return player;
     }
 
     public void generateEntity () {

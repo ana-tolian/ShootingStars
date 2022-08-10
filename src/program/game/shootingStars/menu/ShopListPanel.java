@@ -1,7 +1,8 @@
 package program.game.shootingStars.menu;
 
-import program.game.shootingStars.GameInfoLoader;
+import program.game.shootingStars.GameGeneralDataIO;
 import program.game.shootingStars.ImageLoader;
+import program.game.shootingStars.GamePlayerDataIO;
 import program.game.shootingStars.entities.BuyablePlayerShip;
 import program.game.shootingStars.ui.GButton;
 import program.game.shootingStars.ui.GLabel;
@@ -11,15 +12,20 @@ import program.game.shootingStars.variables.constant.GameConstant;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.util.ArrayList;
 
 
-public class ShopListPanel extends GPanel {
+public class ShopListPanel extends GPanel implements ActionListener {
 
     private ArrayList<BuyablePlayerShip> shipsInStock;
+    private GameGeneralDataIO generalDataIO;
     private ImageLoader imageLoader;
+    private GamePlayerDataIO balance;
+    private ShopPanel shop;
 
-    private GPanel upDownButtonPanel;
     private GPanel shipsPanel [];
     private GPanel shipTextInfoPanel[];
 
@@ -28,42 +34,23 @@ public class ShopListPanel extends GPanel {
     private GTextArea descriptionLabel [];
 
     private GButton buyButton [];
-    private GButton upButton;
-    private GButton downButton;
 
 
-    public ShopListPanel () {
+    public ShopListPanel (ShopPanel shop) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
-//        setPreferredSize(new Dimension(765, 450));
 
+        this.shop = shop;
         imageLoader = new ImageLoader();
-        shipsInStock = new GameInfoLoader().getShipsInStock();;
+        balance = new GamePlayerDataIO();
+        generalDataIO = new GameGeneralDataIO();
+        shipsInStock = generalDataIO.getShipsInStock();;
 
         initializeArrays();
         initializeGraphicElements();
 
-        upDownButtonPanel = new GPanel();
-        upDownButtonPanel.setLayout(new BoxLayout(upDownButtonPanel, BoxLayout.Y_AXIS));
-
-        upButton = new GButton();
-        upButton.setPreferredSize(new Dimension(48, 48));
-        upButton.setIcon(imageLoader.getUpArrowIcon());
-        downButton = new GButton();
-        downButton.setPreferredSize(new Dimension(48, 48));
-        downButton.setIcon(imageLoader.getDownArrowIcon());
-
-//        upDownButtonPanel.add(upButton);
-//        upDownButtonPanel.add(downButton);
-
-
-        add(shipsPanel[0]);
-//        add(upDownButtonPanel);
-        add(shipsPanel[1]);
-        add(shipsPanel[2]);
-        add(shipsPanel[3]);
-        add(shipsPanel[4]);
-        add(shipsPanel[5]);
+       for (int i = 0; i < shipsInStock.size(); i++)
+           add(shipsPanel[i]);
     }
 
     private void initializeArrays () {
@@ -102,10 +89,25 @@ public class ShopListPanel extends GPanel {
             descriptionLabel[i] = new GTextArea(2, 22);
             descriptionLabel[i].setText("Description: " + stock.getDescription());
 
-            buyButton[i] = new GButton(stock.getCost() + "");
-            buyButton[i].setIconTextGap(5);
-            buyButton[i].setIcon(imageLoader.getCoinIcon());
+
+            buyButton[i] = new GButton();
+
+            if (!stock.isBought()) {
+                buyButton[i].setText(stock.getCost() + "");
+                buyButton[i].setIconTextGap(5);
+                buyButton[i].setIcon(imageLoader.getCoinIcon());
+
+            } else {
+                if (!stock.isEquipped())
+                    buyButton[i].setText("Bought");
+                else {
+                    buyButton[i].setText("Bought *");
+                    buyButton[i].setEnabled(false);
+                }
+            }
             buyButton[i].setPreferredSize(new Dimension(110, 200));
+            buyButton[i].setActionCommand(i + "");
+            buyButton[i].addActionListener(this);
 
             shipTextInfoPanel[i].add(characteristicLabel[i]);
             shipTextInfoPanel[i].add(descriptionLabel[i]);
@@ -115,6 +117,51 @@ public class ShopListPanel extends GPanel {
             shipsPanel[i].add(buyButton[i]);
 
         }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton button = (JButton) e.getSource();
+
+        for (int i = 0; i < shipsInStock.size(); i++) {
+            if (button.getActionCommand().equals(i + "")) {
+                BuyablePlayerShip ship = shipsInStock.get(i);
+
+                if (ship.isBought())
+                    equip(i);
+
+                if (balance.loadMoney() >= ship.getCost() && !ship.isBought()) {
+                    buy(ship, i);
+                }
+            }
+        }
+    }
+
+    private void equip (int j) {
+        for (int i = 0; i < shipsInStock.size(); i++) {
+            BuyablePlayerShip ship = shipsInStock.get(i);
+            if (ship.isEquipped()) {
+                ship.unequip();
+                buyButton[i].setText("Bought");
+                buyButton[i].setEnabled(true);
+            }
+
+            if (i == j) {
+                ship.equip();
+                buyButton[i].setText("Bought *");
+                buyButton[i].setEnabled(false);
+                new GamePlayerDataIO().saveEquipped(ship);
+            }
+        }
+    }
+
+    private void buy (BuyablePlayerShip ship, int i) {
+        ship.buy();
+        balance.changeBalanceAndSave(ship.getCost());
+        buyButton[i].setIcon(null);
+        buyButton[i].setText("Bought");
+        shop.refreshBalanceLabel();
+        generalDataIO.saveInfo();
     }
 
 }

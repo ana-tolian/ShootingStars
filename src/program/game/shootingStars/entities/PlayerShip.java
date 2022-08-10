@@ -12,7 +12,7 @@ public class PlayerShip extends StaticEntity {
 	protected BufferedImage[] images;
 
 	private int numberOfGuns;
-	private int[] gunPosX;
+	private int gunPosX [];
 	private int gunPosY [];
 
 	private boolean isMove;
@@ -44,7 +44,8 @@ public class PlayerShip extends StaticEntity {
 	}
 	
 	public void drawFire (Graphics g) {
-		g.drawImage(images[(int) Math.abs(System.currentTimeMillis() % 14)], x, y + 31, 21, 28, null);
+		g.drawImage(images[(int) Math.abs(System.currentTimeMillis() % 14)],
+				x + ((width - images[0].getWidth()) >> 1), y + height, null);
 	}
 
 	public Point [] shoot () {
@@ -81,6 +82,14 @@ public class PlayerShip extends StaticEntity {
 		return isMove;
 	}
 	
-
+	@Override
+	public String toString () {
+		String s = health + "#" + numberOfGuns + "#";
+		for (int i = 0; i < numberOfGuns; i++) {
+			s += gunPosX[i] + "#";
+			s += gunPosY[i] + "#";
+		}
+		return s;
+	}
 
 }
