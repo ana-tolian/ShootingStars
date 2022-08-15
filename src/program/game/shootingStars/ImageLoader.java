@@ -20,36 +20,19 @@ public class ImageLoader {
 	public static BufferedImage explosionImage;
 	public static BufferedImage coinCollectedImage;
 	public static BufferedImage plusImage;
+	public static BufferedImage upgradeIcon;
+	public static BufferedImage shopIcon;
 
 	public static BufferedImage fireAnimationSprites [];
 	public static BufferedImage moduleLevelSprite[];
 
-	public static ImageIcon coinIcon;
-	public static ImageIcon upgradeIcon;
-	public static ImageIcon shopIcon;
-	public static ImageIcon upArrow;
-	public static ImageIcon downArrow;
-	
 	
 	public ImageLoader () {
 		fireAnimationSprites = new BufferedImage [15];
 		moduleLevelSprite = new BufferedImage [5];
-		loadIcons();
 		loadImages();
 	}
 
-	private void loadIcons () {
-		coinIcon = new ImageIcon(PathConstant.FILE_PATH_COIN_SPRITE);
-		upgradeIcon = new ImageIcon(PathConstant.FILE_PATH_UPGRADE_ICON);
-		shopIcon = new ImageIcon(PathConstant.FILE_PATH_SHOP_ICON);
-		upArrow = new ImageIcon(PathConstant.FILE_PATH_UP_ARROW);
-		downArrow = new ImageIcon(PathConstant.FILE_PATH_DOWN_ARROW);
-
-		coinIcon.getImage().flush();
-		upgradeIcon.getImage().flush();
-		shopIcon.getImage().flush();
-	}
-	
 	
 	private void loadImages () {
 		try {
@@ -63,6 +46,8 @@ public class ImageLoader {
 			explosionImage = ImageIO.read(new File (PathConstant.FILE_PATH_EXPLOSION_SPRITE));
 			coinCollectedImage = ImageIO.read(new File (PathConstant.FILE_PATH_COIN_COLLECTED_SPRITE));
 			plusImage = ImageIO.read(new File (PathConstant.FILE_PATH_PLUS_ICON));
+			upgradeIcon = ImageIO.read(new File (PathConstant.FILE_PATH_UPGRADE_ICON));
+			shopIcon = ImageIO.read(new File (PathConstant.FILE_PATH_SHOP_ICON));
 //			Image curImage = Toolkit.getDefaultToolkit().createImage(getClass().getResource("/images/cursor.png"));
 
 			for (int i = 0; i < fireAnimationSprites.length; i++) {
@@ -85,26 +70,6 @@ public class ImageLoader {
 		} catch (Exception e) {}
 
 		return br;
-	}
-
-	public ImageIcon getCoinIcon () {
-		return coinIcon;
-	}
-
-	public ImageIcon getUpgradeIcon () {
-		return upgradeIcon;
-	}
-
-	public ImageIcon getShopIcon () {
-		return shopIcon;
-	}
-
-	public ImageIcon getUpArrowIcon () {
-		return upArrow;
-	}
-
-	public ImageIcon getDownArrowIcon () {
-		return downArrow;
 	}
 
 }

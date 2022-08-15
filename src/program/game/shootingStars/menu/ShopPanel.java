@@ -44,7 +44,7 @@ public class ShopPanel extends GPanel implements ActionListener {
         balancePanel = new GPanel();
 
         balanceLabel = new GLabel ();
-        balanceLabel.setIcon(imageLoader.getCoinIcon());
+        balanceLabel.setIcon(new ImageIcon(ImageLoader.coinSprite));
         balanceLabel.setIconTextGap(5);
         balanceLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 10));
         balancePanel.add(balanceLabel);
@@ -54,7 +54,7 @@ public class ShopPanel extends GPanel implements ActionListener {
 
         shipShopMenuButton = new GButton ("");
         shipShopMenuButton.setPreferredSize(new Dimension(340, 340));
-        shipShopMenuButton.setIcon(imageLoader.getShopIcon());
+        shipShopMenuButton.setIcon(new ImageIcon(ImageLoader.shopIcon));
         shipShopMenuButton.setActionCommand("shopping");
         shipShopMenuButton.addActionListener(this);
 
@@ -63,7 +63,7 @@ public class ShopPanel extends GPanel implements ActionListener {
 
         upgradeShipMenuButton = new GButton ("");
         upgradeShipMenuButton.setPreferredSize(new Dimension(340, 340));
-        upgradeShipMenuButton.setIcon(imageLoader.getUpgradeIcon());
+        upgradeShipMenuButton.setIcon(new ImageIcon(ImageLoader.upgradeIcon));
         upgradeShipMenuButton.setActionCommand("upgrade");
         upgradeShipMenuButton.addActionListener(this);
 

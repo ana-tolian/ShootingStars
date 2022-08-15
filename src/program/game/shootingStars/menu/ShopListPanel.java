@@ -96,7 +96,7 @@ public class ShopListPanel extends GPanel implements ActionListener {
             if (!stock.isBought()) {
                 buyButton[i].setText(stock.getCost() + "");
                 buyButton[i].setIconTextGap(5);
-                buyButton[i].setIcon(imageLoader.getCoinIcon());
+                buyButton[i].setIcon(new ImageIcon(ImageLoader.coinSprite));
 
             } else {
                 if (!stock.isEquipped())
