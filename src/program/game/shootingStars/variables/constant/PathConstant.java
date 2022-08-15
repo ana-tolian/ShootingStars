@@ -18,6 +18,7 @@ public class PathConstant {
     public static final String FILE_PATH_SHOP_ICON = "res/shop.png";
     public static final String FILE_PATH_UP_ARROW = "res/up.png";
     public static final String FILE_PATH_DOWN_ARROW = "res/down.png";
+    public static final String FILE_PATH_PLUS_ICON = "res/plus.png";
 
     public static final String FILE_PATH_SHIPS_INFO = "res/ships.txt";
     public static final String FILE_PATH_MONEY = "res/money.txt";

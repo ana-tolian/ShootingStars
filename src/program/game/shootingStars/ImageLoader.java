@@ -19,15 +19,16 @@ public class ImageLoader {
 	public static BufferedImage cursorImage;
 	public static BufferedImage explosionImage;
 	public static BufferedImage coinCollectedImage;
+	public static BufferedImage plusImage;
 
 	public static BufferedImage fireAnimationSprites [];
 	public static BufferedImage moduleLevelSprite[];
 
-	private ImageIcon coinIcon;
-	private ImageIcon upgradeIcon;
-	private ImageIcon shopIcon;
-	private ImageIcon upArrow;
-	private ImageIcon downArrow;
+	public static ImageIcon coinIcon;
+	public static ImageIcon upgradeIcon;
+	public static ImageIcon shopIcon;
+	public static ImageIcon upArrow;
+	public static ImageIcon downArrow;
 	
 	
 	public ImageLoader () {
@@ -61,6 +62,7 @@ public class ImageLoader {
 			cursorImage = ImageIO.read(new File (PathConstant.FILE_PATH_CURSOR));
 			explosionImage = ImageIO.read(new File (PathConstant.FILE_PATH_EXPLOSION_SPRITE));
 			coinCollectedImage = ImageIO.read(new File (PathConstant.FILE_PATH_COIN_COLLECTED_SPRITE));
+			plusImage = ImageIO.read(new File (PathConstant.FILE_PATH_PLUS_ICON));
 //			Image curImage = Toolkit.getDefaultToolkit().createImage(getClass().getResource("/images/cursor.png"));
 
 			for (int i = 0; i < fireAnimationSprites.length; i++) {

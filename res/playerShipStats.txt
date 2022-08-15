@@ -1,2 +1,3 @@
-name=|gun_level=|hull_level=|special={}
-Rocket|1|1|none
+name=#gun_level=#hull_level=#special={}
+Rocket#1#2#none
+Rocket#3#4#none

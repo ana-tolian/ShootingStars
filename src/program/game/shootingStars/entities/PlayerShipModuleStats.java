@@ -1,13 +1,21 @@
 package program.game.shootingStars.entities;
 
-public class PlayerStats {
+public class PlayerShipModuleStats {
 
     private String name;
     private String special;
     private int weaponLevel;
     private int hullLevel;
 
-    public PlayerStats (String name, int weaponLevel, int hullLevel, String special) {
+
+    public PlayerShipModuleStats (String name) {
+        this.name = name;
+        this.weaponLevel = 1;
+        this.hullLevel = 1;
+        this.special = "none";
+    }
+
+    public PlayerShipModuleStats (String name, int weaponLevel, int hullLevel, String special) {
         this.name = name;
         this.weaponLevel = weaponLevel;
         this.hullLevel = hullLevel;
@@ -44,5 +52,10 @@ public class PlayerStats {
 
     public void setHullLevel(int hullLevel) {
         this.hullLevel = hullLevel;
+    }
+
+    @Override
+    public String toString () {
+        return name + "#" + weaponLevel + "#" + hullLevel + "#" + special;
     }
 }

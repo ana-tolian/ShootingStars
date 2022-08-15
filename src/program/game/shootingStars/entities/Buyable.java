@@ -10,5 +10,5 @@ public interface Buyable {
     boolean isBought ();
     void buy ();
     String getSpecial ();
-    ImageIcon getIcon ();
+    ImageIcon getIcon (int w, int h);
 }

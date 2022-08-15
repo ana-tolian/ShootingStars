@@ -13,11 +13,10 @@ import java.util.Scanner;
 public class GameGeneralDataIO {
 
     private ArrayList<BuyablePlayerShip> shipsInStock;
-    private ArrayList<PlayerShip> ownedShips;
+
 
     public GameGeneralDataIO() {
         shipsInStock = new ArrayList<>();
-        ownedShips = new ArrayList<>();
         loadInfo();
     }
 
@@ -61,7 +60,7 @@ public class GameGeneralDataIO {
     }
 
     public void saveInfo () {
-        String s = getFirstLine() + "\r\n";
+        String s = getFirstLine() + "\n";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File(PathConstant.FILE_PATH_SHIPS_INFO)))) {
             bw.write(s);
 

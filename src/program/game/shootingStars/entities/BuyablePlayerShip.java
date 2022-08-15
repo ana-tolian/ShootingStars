@@ -71,10 +71,18 @@ public class BuyablePlayerShip extends PlayerShip implements Buyable, Equippable
     }
 
     @Override
-    public ImageIcon getIcon () {
+    public ImageIcon getIcon (int w, int h) {
         ImageIcon imageIcon = new ImageIcon(
                 new ImageIcon(img).getImage().getScaledInstance(width*3, height*3, Image.SCALE_DEFAULT));
         return imageIcon;
+    }
+
+    public ImageIcon getIcon () {
+        return getIcon(3, 3);
+    }
+
+    public int getCostOfUpgrade (int level) {
+        return (int) (30 * level * level + cost * 0.1);
     }
 
     @Override

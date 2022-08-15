@@ -22,5 +22,6 @@ public class GLabel extends JLabel {
         setBackground(GameConstant.BUTTON_COLOR);
         setForeground(GameConstant.FONT_COLOR);
         setFont(GameConstant.SYSTEM_FONT);
+        setIconTextGap(5);
     }
 }
