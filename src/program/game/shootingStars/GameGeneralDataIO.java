@@ -1,7 +1,7 @@
 package program.game.shootingStars;
 
 import program.game.shootingStars.entities.BuyablePlayerShip;
-import program.game.shootingStars.entities.PlayerShip;
+import program.game.shootingStars.entities.PlayerShipModuleStats;
 import program.game.shootingStars.variables.constant.GameConstant;
 import program.game.shootingStars.variables.constant.PathConstant;
 
@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class GameGeneralDataIO {
 
-    private ArrayList<BuyablePlayerShip> shipsInStock;
+    public static ArrayList<BuyablePlayerShip> shipsInStock;
 
 
     public GameGeneralDataIO() {
@@ -20,16 +20,16 @@ public class GameGeneralDataIO {
         loadInfo();
     }
 
-    private void loadInfo () {
-        String equippedShip = new GamePlayerDataIO().loadEquipped();
+    private static void loadInfo () {
+        String equippedShip = GamePlayerDataIO.loadEquipped();
 
         try (Scanner in = new Scanner(new File(PathConstant.FILE_PATH_SHIPS_INFO))) {
             in.nextLine();
 
-            String s[];
+            String [] s;
             int numOfGuns;
-            int gunPosX[];
-            int gunPosY[];
+            int [] gunPosX;
+            int [] gunPosY;
 
             while (in.hasNext()) {
                 s = in.nextLine().split("#");
@@ -44,11 +44,13 @@ public class GameGeneralDataIO {
                 }
 
                 BufferedImage br = ImageLoader.getSpriteByPath(s[4 + numOfGuns * 2]);
+                PlayerShipModuleStats stats = GamePlayerDataIO.getStats(s[0]);
 
                 shipsInStock.add(new BuyablePlayerShip(10, GameConstant.F_WIDTH / 2 - 50, GameConstant.F_HEIGHT / 2 - 50,
-                        Integer.parseInt(s[1]), br, ImageLoader.fireAnimationSprites, numOfGuns, gunPosX, gunPosY, s[0],
-                        s[5 + numOfGuns * 2], s[3 + numOfGuns * 2], Integer.parseInt(s[6 + numOfGuns * 2]),
-                        Boolean.parseBoolean(s[7 + numOfGuns * 2]), s[4 + numOfGuns * 2]));
+                        Integer.parseInt(s[1]), br, ImageLoader.fireAnimationSprites, numOfGuns, gunPosX, gunPosY,
+                        s[5 + numOfGuns * 2], stats, Integer.parseInt(s[6 + numOfGuns * 2]),
+                        Boolean.parseBoolean(s[7 + numOfGuns * 2]), s[4 + numOfGuns * 2],
+                        Integer.parseInt(s[8 + numOfGuns * 2])));
 
                 if (s[0].equals(equippedShip)) {
                     shipsInStock.get(shipsInStock.size() - 1).equip();
@@ -59,13 +61,13 @@ public class GameGeneralDataIO {
         }
     }
 
-    public void saveInfo () {
+    public static void saveInfo () {
         String s = getFirstLine() + "\n";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File(PathConstant.FILE_PATH_SHIPS_INFO)))) {
             bw.write(s);
 
-            for (int i = 0; i < shipsInStock.size(); i++)
-                bw.write(shipsInStock.get(i).toString());
+            for (BuyablePlayerShip ship : shipsInStock)
+                bw.write(ship.toString());
             bw.flush();
 
         } catch (IOException e) {
@@ -73,20 +75,14 @@ public class GameGeneralDataIO {
         }
     }
 
-    private String getFirstLine () {
+    private static String getFirstLine () {
         String firstLine = "";
         try (BufferedReader br = new BufferedReader(new FileReader(new File(PathConstant.FILE_PATH_SHIPS_INFO)))) {
             firstLine = br.readLine();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return firstLine;
     }
 
-
-    public ArrayList<BuyablePlayerShip> getShipsInStock () {
-        return shipsInStock;
-    }
 }

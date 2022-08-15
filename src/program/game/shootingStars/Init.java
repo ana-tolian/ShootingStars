@@ -26,8 +26,10 @@ public class Init {
 		frame = new JFrame ("Shooting Star");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(GameConstant.F_WIDTH, GameConstant.F_HEIGHT);
-//		frame.setResizable(false);
+		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
+
+		new ImageLoader();
 
 		main = new MainMenuPanel ();
 		settings = new Settings ();
@@ -35,7 +37,8 @@ public class Init {
 		pausePanel = new PausePanel();
 		shopPanel = new ShopPanel();
 
-		new ImageLoader();
+		new GamePlayerDataIO();
+		new GameGeneralDataIO();
 		
 		frame.add(info);
 		frame.add(settings);
@@ -99,12 +102,8 @@ public class Init {
 	}
          
 	
-	public static void main (String args []) {
-		SwingUtilities.invokeLater(new Runnable () {
-			public void run () {
-				new Init();
-			}
-		});
+	public static void main (String [] args) {
+		SwingUtilities.invokeLater(() -> new Init());
 	}
 
 }

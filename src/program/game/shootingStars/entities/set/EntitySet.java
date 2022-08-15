@@ -6,7 +6,6 @@ import program.game.shootingStars.entities.BuyablePlayerShip;
 import program.game.shootingStars.entities.PlayerShip;
 import program.game.shootingStars.entities.StaticEntity;
 import program.game.shootingStars.variables.changable.Changable;
-import program.game.shootingStars.variables.constant.GameConstant;
 
 import javax.swing.JPanel;
 import java.awt.*;
@@ -19,16 +18,14 @@ public class EntitySet {
     private final int EXPLOSION_TACTS = 9;
     private int tact = 0;
 
-    private AsteroidSet asteroids;
-    private CoinSet coins;
-    private EnemyShipSet enemies;
-    private BulletSet bullets;
-    private PlayerShip player;
+    private final AsteroidSet asteroids;
+    private final CoinSet coins;
+    private final EnemyShipSet enemies;
+    private final BulletSet bullets;
+    private final PlayerShip player;
 
-    private ArrayList<StaticEntity> markedAsDestroyed;
-    private ArrayList<BuyablePlayerShip> possibleShips;
-
-    private GameGeneralDataIO generalDataIO;
+    private final ArrayList<StaticEntity> markedAsDestroyed;
+    private final ArrayList<BuyablePlayerShip> possibleShips;
 
     private BufferedImage asteroidImage;
     private BufferedImage enemyImage;
@@ -41,8 +38,7 @@ public class EntitySet {
         loadImages(panel);
 
         this.markedAsDestroyed = new ArrayList<>();
-        this.generalDataIO = new GameGeneralDataIO();
-        this.possibleShips = generalDataIO.getShipsInStock();
+        this.possibleShips = GameGeneralDataIO.shipsInStock;
 
         this.coins = new CoinSet(coinImage, markedAsDestroyed);
         this.asteroids = new AsteroidSet(asteroidImage);
@@ -59,7 +55,6 @@ public class EntitySet {
         this.bulletImage = ImageLoader.bulletSprite;
         this.asteroidImage = ImageLoader.asteroidSprite;
         this.enemyImage = ImageLoader.enemySprite;
-        this.bulletImage = ImageLoader.bulletSprite;
         this.coinImage = ImageLoader.coinSprite;
         panel.checkImage(asteroidImage, panel);
         panel.checkImage(enemyImage, panel);

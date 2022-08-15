@@ -12,7 +12,7 @@ public class GameConstant {
     public static final Color FONT_COLOR_MOUSE_ENTERED = new Color (37, 130, 175);
 
     public static final int F_WIDTH = 820;
-    public static final int F_HEIGHT = 750;
+    public static final int F_HEIGHT = 850;
 
     public static final int BUTTON_WIDTH = 200;
     public static final int BUTTON_HEIGHT = 80;

@@ -1,42 +1,38 @@
 package program.game.shootingStars;
 
 import program.game.shootingStars.entities.BuyablePlayerShip;
-import program.game.shootingStars.entities.PlayerShip;
 import program.game.shootingStars.entities.PlayerShipModuleStats;
 import program.game.shootingStars.variables.constant.PathConstant;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 
 public class GamePlayerDataIO {
 
-    private ArrayList<PlayerShipModuleStats> ownedShips;
+    public static ArrayList<PlayerShipModuleStats> ownedShips = new ArrayList<>();
 
-    private File resultsFile;
-    private File equippedPlayerShip;
-    private File playerShipStats;
-    private File moneyFile;
+    private static final File resultsFile = new File (PathConstant.FILE_PATH_SAVED_RESULTS);
+    private static final File equippedPlayerShip = new File (PathConstant.FILE_PATH_EQUIPPED);
+    private static final File playerShipStats = new File (PathConstant.FILE_PATH_PLAYER_SHIP_STATS);
+    private static final File moneyFile  = new File (PathConstant.FILE_PATH_MONEY);
 
 
     public GamePlayerDataIO() {
-        this.resultsFile = new File (PathConstant.FILE_PATH_SAVED_RESULTS);
-        this.moneyFile = new File (PathConstant.FILE_PATH_MONEY);
-        this.equippedPlayerShip = new File (PathConstant.FILE_PATH_EQUIPPED);
-        this.playerShipStats = new File (PathConstant.FILE_PATH_PLAYER_SHIP_STATS);
-        this.ownedShips = new ArrayList<>();
+        loadPlayerStats();
     }
 
 
     // Save results after game ends
-    public void save (int score, int distance) {
+    public static void save (int score, int distance) {
         saveRecord(score, distance);
         saveMoney(score);
     }
 
     // Change player balance
-    public void changeBalanceAndSave (int cost) {
+    public static void changeBalanceAndSave (int cost) {
         saveMoney(-cost);
     }
 
@@ -44,7 +40,7 @@ public class GamePlayerDataIO {
     //
     //  Save/load info about equipped ship
     //
-    public String loadEquipped () {
+    public static String loadEquipped () {
         String str = "";
 
         if (!isFileExist(equippedPlayerShip))
@@ -58,7 +54,7 @@ public class GamePlayerDataIO {
         return str;
     }
 
-    public void saveEquipped (BuyablePlayerShip ship) {
+    public static void saveEquipped (BuyablePlayerShip ship) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(equippedPlayerShip))) {
             bw.write(ship.getName());
             bw.newLine();
@@ -72,7 +68,7 @@ public class GamePlayerDataIO {
     //
     //  Save/load player ship stats (weapon level, hull level etc)
     //
-    public PlayerShipModuleStats getPlayerStats () {
+    public static PlayerShipModuleStats loadPlayerStats() {
         PlayerShipModuleStats stats = null;
         String equipped = loadEquipped();
 
@@ -82,10 +78,12 @@ public class GamePlayerDataIO {
            String temp;
            while (in.hasNext()) {
                temp = in.nextLine();
-               ownedShips.add((readStats(temp)));
 
-               if (temp.contains(equipped))
-                   stats = ownedShips.get(ownedShips.size() - 1);
+               if (temp.contains(equipped)) {
+                   stats = readStats(temp);
+                   ownedShips.add(stats);
+               } else
+                   ownedShips.add(readStats(temp));
            }
 
         } catch (IOException e) {
@@ -94,13 +92,13 @@ public class GamePlayerDataIO {
         return stats;
     }
 
-    private PlayerShipModuleStats readStats (String temp) {
-        String s [] = temp.split("#");
+    private static PlayerShipModuleStats readStats (String temp) {
+        String [] s = temp.split("#");
         return new PlayerShipModuleStats(s[0], Integer.parseInt(s[1]), Integer.parseInt(s[2]), s[3]);
     }
 
-    public void savePlayerStats (PlayerShipModuleStats stats) {
-        String firstLine = getFirstLine();
+    public static void savePlayerStats () {
+        String firstLine = getFirstLine(playerShipStats);
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(playerShipStats))) {
             bw.write(firstLine);
@@ -121,10 +119,17 @@ public class GamePlayerDataIO {
     //
     //  Save player record (distance and score)
     //
-    private void saveRecord (int score, int distance) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(resultsFile, true))) {
-            bw.write("| score: " + score + " distance: " + distance + " | ");
-            bw.newLine();
+    private static void saveRecord (int score, int distance) {
+        String [] records = (getLines(resultsFile, 10) + distance + "#" + score).split(" ");
+        Arrays.sort(records);
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(resultsFile))) {
+            for (int i = 0; i < 5 && i < records.length; i++) {
+                if (!records[i].equals("") && records[i] != null) {
+                    bw.write(records[i]);
+                    bw.newLine();
+                }
+            }
             bw.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -134,7 +139,7 @@ public class GamePlayerDataIO {
     //
     //  Save/load player's balance to file
     //
-    private void saveMoney (int money) {
+    private static void saveMoney (int money) {
         money = loadMoney() + money;
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(moneyFile, false))) {
             bw.write(money + "");
@@ -144,7 +149,7 @@ public class GamePlayerDataIO {
         }
     }
 
-    public int loadMoney () {
+    public static int loadMoney () {
         int money = 0;
 
         if(!isFileExist(moneyFile))
@@ -163,7 +168,7 @@ public class GamePlayerDataIO {
     //
     //
     //
-    private boolean isFileExist (File file) {
+    private static boolean isFileExist (File file) {
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -175,19 +180,33 @@ public class GamePlayerDataIO {
         return true;
     }
 
-    private String getFirstLine () {
+    private static String getFirstLine (File file) {
         String firstLine = "";
-        try (BufferedReader br = new BufferedReader(new FileReader(new File(PathConstant.FILE_PATH_PLAYER_SHIP_STATS)))) {
-            firstLine = br.readLine();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        try (Scanner in = new Scanner (file)) {
+            firstLine = in.nextLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return firstLine;
     }
 
-    public ArrayList<PlayerShipModuleStats> getOwnedShips () {
-        return ownedShips;
+    private static String getLines (File file, int j) {
+        String lines = "";
+        try (Scanner in = new Scanner (file)) {
+            for (int i = 0; i < j && in.hasNextLine(); i++)
+                lines += in.nextLine();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lines;
     }
+
+    public static PlayerShipModuleStats getStats (String name) {
+        for (PlayerShipModuleStats p : ownedShips)
+            if (p.getName().equals(name))
+                return p;
+            return null;
+    }
+
 }

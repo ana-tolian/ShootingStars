@@ -4,6 +4,7 @@ import program.game.shootingStars.GameGeneralDataIO;
 import program.game.shootingStars.ImageLoader;
 import program.game.shootingStars.GamePlayerDataIO;
 import program.game.shootingStars.entities.BuyablePlayerShip;
+import program.game.shootingStars.entities.PlayerShipModuleStats;
 import program.game.shootingStars.ui.GButton;
 import program.game.shootingStars.ui.GLabel;
 import program.game.shootingStars.ui.GPanel;
@@ -14,38 +15,30 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.util.ArrayList;
 
 
 public class ShopListPanel extends GPanel implements ActionListener {
 
-    private ArrayList<BuyablePlayerShip> shipsInStock;
-    private GameGeneralDataIO generalDataIO;
-    private ImageLoader imageLoader;
-    private GamePlayerDataIO balance;
-    private ShopPanel shop;
+    private final ArrayList<BuyablePlayerShip> shipsInStock;
+    private final ShopPanel shop;
 
-    private GPanel shipsPanel [];
-    private GPanel shipTextInfoPanel[];
+    private GPanel [] shipsPanel;
+    private GPanel [] shipTextInfoPanel;
 
-    private GLabel shipImageLabel [];
-    private GTextArea characteristicLabel [];
-    private GTextArea descriptionLabel [];
+    private GLabel [] shipImageLabel;
+    private GTextArea [] characteristicLabel;
+    private GTextArea [] descriptionLabel;
 
-    private GButton buyButton [];
+    private GButton [] buyButton;
 
 
-    public ShopListPanel (ShopPanel shop, ImageLoader imageLoader,
-                          GamePlayerDataIO balance, GameGeneralDataIO generalDataIO) {
+    public ShopListPanel (ShopPanel shop) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
         this.shop = shop;
-        this.imageLoader = imageLoader;
-        this.balance = balance;
-        this.generalDataIO = generalDataIO;
-        shipsInStock = generalDataIO.getShipsInStock();;
+        shipsInStock = GameGeneralDataIO.shipsInStock;
 
         initializeArrays();
         initializeGraphicElements();
@@ -131,7 +124,7 @@ public class ShopListPanel extends GPanel implements ActionListener {
                 if (ship.isBought())
                     equip(i);
 
-                if (balance.loadMoney() >= ship.getCost() && !ship.isBought()) {
+                if (GamePlayerDataIO.loadMoney() >= ship.getCost() && !ship.isBought()) {
                     buy(ship, i);
                 }
             }
@@ -151,18 +144,19 @@ public class ShopListPanel extends GPanel implements ActionListener {
                 ship.equip();
                 buyButton[i].setText("Bought *");
                 buyButton[i].setEnabled(false);
-                new GamePlayerDataIO().saveEquipped(ship);
+                GamePlayerDataIO.saveEquipped(ship);
             }
         }
     }
 
     private void buy (BuyablePlayerShip ship, int i) {
         ship.buy();
-        balance.changeBalanceAndSave(ship.getCost());
+        GamePlayerDataIO.changeBalanceAndSave(ship.getCost());
         buyButton[i].setIcon(null);
         buyButton[i].setText("Bought");
         shop.refreshBalanceLabel();
-        generalDataIO.saveInfo();
+        GameGeneralDataIO.saveInfo();
+        GamePlayerDataIO.ownedShips.add(new PlayerShipModuleStats(ship.getName()));
     }
 
 }

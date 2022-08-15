@@ -1,7 +1,7 @@
-name=#hull=#num_of_guns=#gun1pos_x=#gun1pos_y=#...#special=#image_link=#description=#cost=#isBought=#
-Rocket#50#1#10#0#none#res/rocket.png#Simple rocket ship with one small turret. Gained on start#0#true
-Fighter#100#2#10#23#24#23#none#res/fighter.png#Tiny space fighter with two small turrets and increased hull#50#false
-Hellfire#200#3#3#41#36#41#19#19#none#res/hellfire.png# #200#false
-Solaris#350#3#1#14#38#14#20#1#coin_magnet#res/solaris.png# #600#false
-Burner#600#3#10#19#24#19#17#6#coin_magnet.laser_beam#res/burner.png# #1200#false
-Beholder#1100#5#1#25#33#25#12#2#22#2#17#2#coin_magnet laser_beam shield ultimate_destroyer#res/beholder.png# #4000#false
+name=#hull=#num_of_guns=#gun1pos_x=#gun1pos_y=#...#special=#image_link=#description=#cost=#isBought=#damage=
+Rocket#50#1#10#0#none#res/rocket.png#Simple rocket ship with one small turret. Gained on start#0#true#15
+Fighter#100#2#10#23#24#23#none#res/fighter.png#Tiny space fighter with two small turrets and increased hull#50#false#10
+Hellfire#200#3#3#41#36#41#19#19#none#res/hellfire.png# #200#false#25
+Solaris#350#3#1#14#38#14#20#1#coin_magnet#res/solaris.png# #600#false#35
+Burner#600#3#10#19#24#19#17#6#coin_magnet.laser_beam#res/burner.png# #1200#false#50
+Beholder#1100#5#1#25#33#25#12#2#22#2#17#2#coin_magnet laser_beam shield ultimate_destroyer#res/beholder.png# #4000#false#70

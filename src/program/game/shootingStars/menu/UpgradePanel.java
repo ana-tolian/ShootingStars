@@ -2,7 +2,6 @@ package program.game.shootingStars.menu;
 
 import program.game.shootingStars.GameGeneralDataIO;
 import program.game.shootingStars.GamePlayerDataIO;
-import program.game.shootingStars.ImageLoader;
 import program.game.shootingStars.entities.BuyablePlayerShip;
 import program.game.shootingStars.entities.PlayerShipModuleStats;
 import program.game.shootingStars.ui.*;
@@ -15,32 +14,27 @@ import java.awt.event.ActionListener;
 
 public class UpgradePanel extends GPanel implements ActionListener {
 
-    private PlayerShipModuleStats stats;
-    private BuyablePlayerShip equippedShip;
-    private GameGeneralDataIO generalDataIO;
-    private GamePlayerDataIO playerDataIO;
-    private ShopPanel shop;
+    private final PlayerShipModuleStats stats;
+    private final BuyablePlayerShip equippedShip;
+    private final ShopPanel shop;
 
-    private GPanel shipPanel;
-    private GPanel shipStatsPanel;
+    private final GPanel shipPanel;
+    private final GPanel shipStatsPanel;
 
-    private ModuleUpgrader healthUpgrader;
-    private ModuleUpgrader weaponUpgrader;
+    private final ModuleUpgrader healthUpgrader;
+    private final ModuleUpgrader weaponUpgrader;
 
-    private GLabel shipImageLabel;
+    private final GLabel shipImageLabel;
 
 
-    public UpgradePanel (ShopPanel shop, ImageLoader imageLoader,
-                         GamePlayerDataIO playerDataIO, GameGeneralDataIO generalDataIO) {
+    public UpgradePanel (ShopPanel shop) {
 
         setLayout(new FlowLayout());
         setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
         this.shop = shop;
-        this.playerDataIO = playerDataIO;
-        this.generalDataIO = generalDataIO;
         this.equippedShip = getEquippedShip();
-        this.stats = playerDataIO.getPlayerStats();
+        this.stats = GamePlayerDataIO.loadPlayerStats();
 
         shipPanel = new GPanel();
 
@@ -69,7 +63,7 @@ public class UpgradePanel extends GPanel implements ActionListener {
     }
 
     private BuyablePlayerShip getEquippedShip () {
-        for (BuyablePlayerShip p : generalDataIO.getShipsInStock())
+        for (BuyablePlayerShip p : GameGeneralDataIO.shipsInStock)
             if (p.isEquipped())
                 return p;
             return null;
@@ -82,7 +76,7 @@ public class UpgradePanel extends GPanel implements ActionListener {
         if (button.getActionCommand().equals("health_upgrade")) {
             int cost = equippedShip.getCostOfUpgrade(stats.getHullLevel());
 
-            if (playerDataIO.loadMoney() >= cost && !healthUpgrader.isMaxLevel()) {
+            if (GamePlayerDataIO.loadMoney() >= cost && !healthUpgrader.isMaxLevel()) {
                 healthUpgrader.upgrade();
                 stats.setHullLevel(stats.getHullLevel() + 1);
                 buy(cost);
@@ -91,7 +85,7 @@ public class UpgradePanel extends GPanel implements ActionListener {
         } else if (button.getActionCommand().equals("weapon_upgrade")) {
             int cost = equippedShip.getCostOfUpgrade(stats.getWeaponLevel());
 
-            if (playerDataIO.loadMoney() >= cost && !weaponUpgrader.isMaxLevel()) {
+            if (GamePlayerDataIO.loadMoney() >= cost && !weaponUpgrader.isMaxLevel()) {
                 weaponUpgrader.upgrade();
                 stats.setWeaponLevel(stats.getWeaponLevel() + 1);
                 buy(cost);
@@ -100,8 +94,8 @@ public class UpgradePanel extends GPanel implements ActionListener {
     }
 
     private void buy (int cost) {
-        playerDataIO.changeBalanceAndSave(cost);
+        GamePlayerDataIO.changeBalanceAndSave(cost);
         shop.refreshBalanceLabel();
-        playerDataIO.savePlayerStats(stats);
+        GamePlayerDataIO.savePlayerStats();
     }
 }

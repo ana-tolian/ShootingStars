@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 
 public class ImageLoader {
 	
@@ -23,8 +22,8 @@ public class ImageLoader {
 	public static BufferedImage upgradeIcon;
 	public static BufferedImage shopIcon;
 
-	public static BufferedImage fireAnimationSprites [];
-	public static BufferedImage moduleLevelSprite[];
+	public static BufferedImage [] fireAnimationSprites;
+	public static BufferedImage [] moduleLevelSprite;
 
 	
 	public ImageLoader () {
@@ -58,7 +57,7 @@ public class ImageLoader {
 				moduleLevelSprite[i] = ImageIO.read(new File (PathConstant.FILE_PATH_SCALE_SPRITE + "scale" + (i + 1) + ".png"));
 			}
 			
-		} catch (Exception e) {}
+		} catch (Exception e) {e.printStackTrace();}
 		
 	}
 
@@ -67,7 +66,7 @@ public class ImageLoader {
 
 		try {
 			br = ImageIO.read(new File (path));
-		} catch (Exception e) {}
+		} catch (Exception e) {e.printStackTrace();}
 
 		return br;
 	}

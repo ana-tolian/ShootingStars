@@ -13,8 +13,8 @@ import java.awt.image.BufferedImage;
 
 public class BackgroundPanel extends GPanel implements Runnable {
 
-	private EntitySet entitySet;
-	private BufferedImage backgroundImage;
+	private final EntitySet entitySet;
+	private final BufferedImage backgroundImage;
 
 	private int y_img;
 	private int score = 0;
@@ -129,7 +129,7 @@ public class BackgroundPanel extends GPanel implements Runnable {
 	}
 
 	public void save () {
-		new GamePlayerDataIO().save(score, length);
+		GamePlayerDataIO.save(score, length);
 	}
 	
 	public void changeDifficult () {

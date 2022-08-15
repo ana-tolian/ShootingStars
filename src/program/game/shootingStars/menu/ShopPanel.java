@@ -1,6 +1,5 @@
 package program.game.shootingStars.menu;
 
-import program.game.shootingStars.GameGeneralDataIO;
 import program.game.shootingStars.ImageLoader;
 import program.game.shootingStars.Init;
 import program.game.shootingStars.GamePlayerDataIO;
@@ -16,30 +15,22 @@ import java.awt.event.ActionListener;
 
 public class ShopPanel extends GPanel implements ActionListener {
 
-    private GameGeneralDataIO generalDataIO;
-    private ImageLoader imageLoader;
-    private GamePlayerDataIO balance;
+    private final GPanel balancePanel;
+    private final GPanel goodsPanel;
+    private final GPanel buttonPanel;
+    private final GPanel backButtonPanel;
 
-    private GPanel balancePanel;
-    private GPanel goodsPanel;
-    private GPanel buttonPanel;
-    private GPanel backButtonPanel;
+    private final GLabel balanceLabel;
 
-    private GLabel balanceLabel;
-
-    private GButton upgradeShipMenuButton;
-    private GButton shipShopMenuButton;
-    private GButton backButton;
+    private final GButton upgradeShipMenuButton;
+    private final GButton shipShopMenuButton;
+    private final GButton backButton;
 
     private boolean subMenu = false;
 
 
     public ShopPanel () {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        imageLoader = new ImageLoader();
-        balance = new GamePlayerDataIO();
-        generalDataIO = new GameGeneralDataIO();
 
         balancePanel = new GPanel();
 
@@ -88,7 +79,7 @@ public class ShopPanel extends GPanel implements ActionListener {
     }
 
     public void refreshBalanceLabel () {
-        balanceLabel.setText(new GamePlayerDataIO().loadMoney() + "$");
+        balanceLabel.setText(GamePlayerDataIO.loadMoney() + "$");
     }
 
 
@@ -103,10 +94,10 @@ public class ShopPanel extends GPanel implements ActionListener {
                 changePanel(buttonPanel);
 
         } else if (button.getActionCommand().equals("shopping")) {
-            changePanel(new GScrollPane(new ShopListPanel(this, imageLoader, balance, generalDataIO)));
+            changePanel(new GScrollPane(new ShopListPanel(this)));
 
         } else if (button.getActionCommand().equals("upgrade")) {
-            changePanel(new UpgradePanel(this, imageLoader, balance, generalDataIO));
+            changePanel(new UpgradePanel(this));
         }
     }
 
