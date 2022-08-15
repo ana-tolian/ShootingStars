@@ -2,6 +2,8 @@ package program.game.shootingStars.menu;
 
 import program.game.shootingStars.*;
 import program.game.shootingStars.entities.set.EntitySet;
+import program.game.shootingStars.io.GamePlayerDataIO;
+import program.game.shootingStars.io.ImageLoader;
 import program.game.shootingStars.ui.GPanel;
 import program.game.shootingStars.variables.changable.Changable;
 import program.game.shootingStars.variables.constant.GameConstant;

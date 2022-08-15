@@ -1,4 +1,4 @@
-package program.game.shootingStars;
+package program.game.shootingStars.io;
 
 import program.game.shootingStars.entities.BuyablePlayerShip;
 import program.game.shootingStars.entities.PlayerShipModuleStats;

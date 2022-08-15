@@ -1,7 +1,7 @@
 package program.game.shootingStars.menu;
 
-import program.game.shootingStars.GameGeneralDataIO;
-import program.game.shootingStars.GamePlayerDataIO;
+import program.game.shootingStars.io.GameGeneralDataIO;
+import program.game.shootingStars.io.GamePlayerDataIO;
 import program.game.shootingStars.entities.BuyablePlayerShip;
 import program.game.shootingStars.entities.PlayerShipModuleStats;
 import program.game.shootingStars.ui.*;

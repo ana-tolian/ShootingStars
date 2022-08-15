@@ -1,6 +1,6 @@
 package program.game.shootingStars.ui;
 
-import program.game.shootingStars.ImageLoader;
+import program.game.shootingStars.io.ImageLoader;
 import program.game.shootingStars.entities.BuyablePlayerShip;
 
 import javax.swing.*;

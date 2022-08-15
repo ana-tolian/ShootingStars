@@ -1,7 +1,7 @@
 package program.game.shootingStars.entities.set;
 
-import program.game.shootingStars.GameGeneralDataIO;
-import program.game.shootingStars.ImageLoader;
+import program.game.shootingStars.io.GameGeneralDataIO;
+import program.game.shootingStars.io.ImageLoader;
 import program.game.shootingStars.entities.BuyablePlayerShip;
 import program.game.shootingStars.entities.PlayerShip;
 import program.game.shootingStars.entities.StaticEntity;

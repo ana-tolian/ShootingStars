@@ -1,9 +1,8 @@
 package program.game.shootingStars.entities;
 
 
-import program.game.shootingStars.ImageLoader;
+import program.game.shootingStars.io.ImageLoader;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Coin extends StaticEntity {

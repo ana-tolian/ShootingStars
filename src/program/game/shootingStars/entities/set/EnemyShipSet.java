@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 public class EnemyShipSet implements Set {
 
-    private BufferedImage enemyImage;
-    private BufferedImage bulletImage;
-    private ArrayList<EnemyShip> enemies;
+    private final BufferedImage enemyImage;
+    private final BufferedImage bulletImage;
+    private final ArrayList<EnemyShip> enemies;
 
     public EnemyShipSet (BufferedImage ship, BufferedImage bullet) {
         this.enemyImage = ship;
@@ -22,8 +22,8 @@ public class EnemyShipSet implements Set {
     }
 
     public void draw (Graphics g) {
-        for (int i = 0; i < enemies.size(); i++) {
-            enemies.get(i).draw(g);
+        for (EnemyShip enemy : enemies) {
+            enemy.draw(g);
         }
     }
 
@@ -45,7 +45,7 @@ public class EnemyShipSet implements Set {
 
     public void generateEntity () {
         for (int i = 0; i < Changable.enemyCount - enemies.size(); i++) {
-            enemies.add(new EnemyShip(10, 100, enemyImage, bulletImage));
+            enemies.add(new EnemyShip(10, 100, enemyImage, bulletImage)); //TODO
         }
     }
 

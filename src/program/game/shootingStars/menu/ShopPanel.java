@@ -1,8 +1,8 @@
 package program.game.shootingStars.menu;
 
-import program.game.shootingStars.ImageLoader;
+import program.game.shootingStars.io.ImageLoader;
 import program.game.shootingStars.Init;
-import program.game.shootingStars.GamePlayerDataIO;
+import program.game.shootingStars.io.GamePlayerDataIO;
 import program.game.shootingStars.ui.GButton;
 import program.game.shootingStars.ui.GLabel;
 import program.game.shootingStars.ui.GPanel;

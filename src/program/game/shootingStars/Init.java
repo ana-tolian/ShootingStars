@@ -1,5 +1,8 @@
 package program.game.shootingStars;
 
+import program.game.shootingStars.io.GameGeneralDataIO;
+import program.game.shootingStars.io.GamePlayerDataIO;
+import program.game.shootingStars.io.ImageLoader;
 import program.game.shootingStars.menu.*;
 import program.game.shootingStars.variables.constant.GameConstant;
 

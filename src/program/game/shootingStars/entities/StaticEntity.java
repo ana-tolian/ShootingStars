@@ -1,6 +1,6 @@
 package program.game.shootingStars.entities;
 
-import program.game.shootingStars.ImageLoader;
+import program.game.shootingStars.io.ImageLoader;
 import program.game.shootingStars.variables.constant.GameConstant;
 
 import java.awt.Graphics;

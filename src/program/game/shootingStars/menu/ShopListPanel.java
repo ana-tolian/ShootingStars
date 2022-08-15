@@ -1,8 +1,8 @@
 package program.game.shootingStars.menu;
 
-import program.game.shootingStars.GameGeneralDataIO;
-import program.game.shootingStars.ImageLoader;
-import program.game.shootingStars.GamePlayerDataIO;
+import program.game.shootingStars.io.GameGeneralDataIO;
+import program.game.shootingStars.io.ImageLoader;
+import program.game.shootingStars.io.GamePlayerDataIO;
 import program.game.shootingStars.entities.BuyablePlayerShip;
 import program.game.shootingStars.entities.PlayerShipModuleStats;
 import program.game.shootingStars.ui.GButton;
@@ -155,7 +155,7 @@ public class ShopListPanel extends GPanel implements ActionListener {
         buyButton[i].setIcon(null);
         buyButton[i].setText("Bought");
         shop.refreshBalanceLabel();
-        GameGeneralDataIO.saveInfo();
+        GameGeneralDataIO.savePlayerGeneralData();
         GamePlayerDataIO.ownedShips.add(new PlayerShipModuleStats(ship.getName()));
     }
 

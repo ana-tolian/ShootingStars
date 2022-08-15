@@ -1,6 +1,6 @@
 package program.game.shootingStars.ui;
 
-import program.game.shootingStars.ImageLoader;
+import program.game.shootingStars.io.ImageLoader;
 
 import javax.swing.ImageIcon;
 import java.awt.image.BufferedImage;

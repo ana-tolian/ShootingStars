@@ -1,0 +1,1 @@
+name=(non-important)#hull=#num_of_guns=#gun1pos_x=#gun1pos_y=#...#image_link=#damage=
