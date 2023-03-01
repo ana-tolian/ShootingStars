@@ -37,13 +37,6 @@ public class PlayerShip extends EnemyShip {
 				x + ((width - images[0].getWidth()) >> 1), y + height, null);
 	}
 
-	public Point [] shoot () {
-		Point [] shots = new Point[numberOfGuns];
-		for (int i = 0; i < numberOfGuns; i++)
-			shots[i] = new Point(gunPosX[i] + this.getX(), gunPosY[i] + this.getY());
-		return shots;
-	}
-
 	public boolean isCollectedCoin() {
 		boolean state = isCollectedCoin;
 		if (isCollectedCoin)

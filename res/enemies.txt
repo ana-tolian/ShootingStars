@@ -1,1 +1,10 @@
 name=(non-important)#hull=#num_of_guns=#gun1pos_x=#gun1pos_y=#...#image_link=#damage=
+Camicadze#70#1#1#1#res/camicadze.png#8
+FighterX#60#2#1#1#2#2#res/fighter_x.png#6
+Raiden#80#2#1#1#2#2#res/raiden.png#4
+Sparkle#90#2#1#1#2#2#res/sparkle.png#5
+Impaler#180#3#1#1#2#2#3#3#res/impaler.png#12
+Manowar#300#3#1#1#2#2#3#3#res/manowar.png#20
+Titan#500#3#1#1#2#2#3#3#res/titan.png#18
+Behemot#700#4#1#1#2#2#3#3#4#4#res/behemot.png#28
+Adamant#1000#5#1#1#2#2#3#3#4#4#5#5#res/adamant.png#40

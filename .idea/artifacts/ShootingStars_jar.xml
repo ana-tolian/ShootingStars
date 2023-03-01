@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact name="ShootingStars:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ShootingStars_jar</output-path>
+    <root id="root">
+      <element id="archive" name="ShootingStars.jar">
+        <element id="module-output" name="ShootingStars" />
+      </element>
+    </root>
+  </artifact>
+</component>

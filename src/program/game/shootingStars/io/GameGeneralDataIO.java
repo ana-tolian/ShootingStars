@@ -107,10 +107,11 @@ public class GameGeneralDataIO {
                     gunPosY[i] = Integer.parseInt(s[4 + 2 * i]);
                 }
 
-                BufferedImage bi = ImageLoader.getSpriteByPath(s[4 + numOfGuns * 2]);
+                System.out.println(s[3 + numOfGuns * 2]);
+                BufferedImage bi = ImageLoader.getSpriteByPath(s[3 + numOfGuns * 2]);
 
                 typeOfEnemies.add(new EnemyShip(10, Integer.parseInt(s[1]), bi, numOfGuns,
-                        gunPosX, gunPosY, Integer.parseInt(s[5 + numOfGuns * 2])));
+                        gunPosX, gunPosY, Integer.parseInt(s[4 + numOfGuns * 2])));
             }
 
         } catch (IOException e) {

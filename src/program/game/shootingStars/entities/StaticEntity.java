@@ -15,8 +15,12 @@ public class StaticEntity implements Entity {
 	protected int y;
 	protected int width;
 	protected int height;
+
 	protected int health;
+	protected int accumulatedDamage;
+
 	protected boolean isDestroyed = false;
+
 	protected BufferedImage img;
 	protected BufferedImage explosionImg = ImageLoader.explosionImage;
 
@@ -57,6 +61,7 @@ public class StaticEntity implements Entity {
 	private void init () {
 		this.width = img.getWidth();
 		this.height = img.getHeight();
+		this.accumulatedDamage = 0;
 	}
 
 	@Override
@@ -102,14 +107,19 @@ public class StaticEntity implements Entity {
 
 	@Override
 	public boolean isEntityOnScreen () {
-		if (y < GameConstant.F_HEIGHT + 50)
-			return true;
-		else
-			return false;
+		return y < GameConstant.F_HEIGHT + 50;
 	}
 
 	public int getHealth() {
 		return health;
+	}
+
+	public void increaseAccumulatedDamage (int d) {
+		accumulatedDamage += d;
+	}
+
+	public int getAccumulatedDamage () {
+		return accumulatedDamage;
 	}
 
 	@Override

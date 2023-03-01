@@ -3,6 +3,7 @@ package program.game.shootingStars.entities.set;
 import program.game.shootingStars.entities.EnemyShip;
 import program.game.shootingStars.entities.PlayerShip;
 import program.game.shootingStars.entities.StaticEntity;
+import program.game.shootingStars.io.GameGeneralDataIO;
 import program.game.shootingStars.variables.changable.Changable;
 
 import java.awt.*;
@@ -45,7 +46,7 @@ public class EnemyShipSet implements Set {
 
     public void generateEntity () {
         for (int i = 0; i < Changable.enemyCount - enemies.size(); i++) {
-            enemies.add(new EnemyShip(10, 100, enemyImage, bulletImage)); //TODO
+            enemies.add(GameGeneralDataIO.typeOfEnemies.get((int) (Math.random() * GameGeneralDataIO.typeOfEnemies.size())).clone()); //TODO
         }
     }
 

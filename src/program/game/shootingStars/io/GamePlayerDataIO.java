@@ -126,8 +126,7 @@ public class GamePlayerDataIO {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(resultsFile))) {
             for (int i = 0; i < 5 && i < records.length; i++) {
                 if (!records[i].equals("") && records[i] != null) {
-                    bw.write(records[i]);
-                    bw.newLine();
+                    bw.write(records[i] + " \n");
                 }
             }
             bw.flush();

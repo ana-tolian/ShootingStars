@@ -1,10 +1,9 @@
 package program.game.shootingStars.entities;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class EnemyShip extends StaticEntity {
-
-    protected int accumulatedDamage;
 
     protected final int damage;
     protected final int numberOfGuns;
@@ -19,7 +18,6 @@ public class EnemyShip extends StaticEntity {
         this.gunPosX = gunPosX;
         this.gunPosY = gunPosY;
         this.damage = damage;
-        this.accumulatedDamage = 0;
     }
 
     public EnemyShip(int speed, int x, int y, int health, BufferedImage img,
@@ -29,20 +27,17 @@ public class EnemyShip extends StaticEntity {
         this.gunPosX = gunPosX;
         this.gunPosY = gunPosY;
         this.damage = damage;
-        this.accumulatedDamage = 0;
     }
 
+    public Point[] shoot () {
+        Point [] shots = new Point[numberOfGuns];
+        for (int i = 0; i < numberOfGuns; i++)
+            shots[i] = new Point(gunPosX[i] + this.getX(), gunPosY[i] + this.getY());
+        return shots;
+    }
 
     public int getDamage () {
         return damage + 10;
-    }
-
-    public void setAccumulatedDamage (int d) {
-        accumulatedDamage += d;
-    }
-
-    public int getAccumulatedDamage () {
-        return accumulatedDamage;
     }
 
     public int getNumberOfGuns () {

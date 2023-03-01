@@ -115,6 +115,7 @@ public class EntitySet {
         if (j >= set.getSize()) {
             return;
         } else if (bullets.getEntity(i).isIntersects(set.getEntity(j))) {
+//            set.getEntity(i).increaseAccumulatedDamage(set.getEntity(i).getDa);
             StaticEntity e = set.getEntity(j);
             set.removeEntity(j);
             markedAsDestroyed.add(e);
